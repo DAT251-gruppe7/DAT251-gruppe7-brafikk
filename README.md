@@ -1,5 +1,9 @@
 # DAT251-gruppe7-brafikk
 
+## Planning
+- [Kanban board](https://github.com/oyjoh/DAT251-gruppe7-brafikk/projects/1)
+- [Miro](https://miro.com/welcome/Ddp1pEl55pSpgQHEHqi676VSzTMRVSdOospUS44sKPiLzDjnuVT7OLJnaKSHkO2W)
+
 ## Run/install backend
 1. Clone  ```[git clone https://github.com/oyjoh/DAT251-gruppe7-brafikk.git]```
 2. Navigate into the diretory ```[cd DAT251-gruppe7-brafikk]```
