@@ -1,4 +1,6 @@
-![brafikk](/assets/images/brafikk.png)
+<p align="center">
+  <img src="/assets/images/brafikk.png" class="center" height="140"/>
+</p>
 
 ## Planning
 - [Kanban board](https://github.com/oyjoh/DAT251-gruppe7-brafikk/projects/1)
@@ -28,4 +30,4 @@
 * Github CI/CD with heroku [github](https://github.com/marketplace/actions/heroku-django-deploy) and for testing [blog](https://hacksoft.io/github-actions-in-action-setting-up-django-and-postgres/)
 
 ## Current technology stack
-![Stack](/assets/images/temp_stack.png)
+![Stack](/assets/images/temp_stack.png =250x)
