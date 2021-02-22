@@ -6,3 +6,7 @@
 3. Source the virtual environment ```[pipenv shell]```
 4. Install the dependencies ```[pipenv install]```
 5. Run this command to start the backend server in the ```[backend]``` directory: ```[python manage.py runserver]``` (You have to run this command while you are sourced into the virtual environment)
+
+## Useful Links
+- Sample project using react/django [github](https://github.com/do-community/django-todo-react) and [blog](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react)
+- Github CI/CD with heroku [github](https://github.com/marketplace/actions/heroku-django-deploy)
