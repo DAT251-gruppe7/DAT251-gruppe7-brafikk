@@ -30,4 +30,4 @@
 * Github CI/CD with heroku [github](https://github.com/marketplace/actions/heroku-django-deploy) and for testing [blog](https://hacksoft.io/github-actions-in-action-setting-up-django-and-postgres/)
 
 ## Current technology stack
-![Stack](/assets/images/temp_stack.png =250x)
+![Stack](/assets/images/temp_stack.png)
