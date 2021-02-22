@@ -1,4 +1,4 @@
-# DAT251-gruppe7-brafikk
+![brafikk](/assets/images/brafikk.png)
 
 ## Planning
 - [Kanban board](https://github.com/oyjoh/DAT251-gruppe7-brafikk/projects/1)
