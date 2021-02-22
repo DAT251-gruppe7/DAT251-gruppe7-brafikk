@@ -15,7 +15,7 @@
 3. Install the dependencies ```[pipenv install]```
 4. Run this command to start the backend server in the ```[backend]``` directory: ```[python manage.py runserver]``` (You have to run this command while you are sourced into the virtual environment)
 * Address [localhost:8000](http://localhost:8000)
-* After adding/changing models rin ```[python manage.py migrate]```
+* After adding/changing models run ```[python manage.py migrate]```
 
 ## Run/install frontend
 1. Navigate into the frontend directory ```[cd frontend]```
