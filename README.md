@@ -14,14 +14,14 @@
 2. Source the virtual environment ```[pipenv shell]```
 3. Install the dependencies ```[pipenv install]```
 4. Run this command to start the backend server in the ```[backend]``` directory: ```[python manage.py runserver]``` (You have to run this command while you are sourced into the virtual environment)
-* Adddress [localhost:8000](http://localhost:8000)
+* Address [localhost:8000](http://localhost:8000)
 * After adding/changing models rin ```[python manage.py migrate]```
 
 ## Run/install frontend
 1. Navigate into the frontend directory ```[cd frontend]```
 2. Install the dependencies ```[npm install]```
 3. Run this command to start the frontend development server in the ```[frontend]``` directory: ```[npm start]``` 
-* Adddress [localhost:3000](http://localhost:3000)
+* Address [localhost:3000](http://localhost:3000)
 
 ## Useful Links
 * Sample project using react/django [github](https://github.com/do-community/django-todo-react) and [blog](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react)
