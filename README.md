@@ -26,3 +26,6 @@
 ## Useful Links
 * Sample project using react/django [github](https://github.com/do-community/django-todo-react) and [blog](https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react)
 * Github CI/CD with heroku [github](https://github.com/marketplace/actions/heroku-django-deploy) and for testing [blog](https://hacksoft.io/github-actions-in-action-setting-up-django-and-postgres/)
+
+## Current technology stack
+![Stack](/assets/images/temp_stack.png)
