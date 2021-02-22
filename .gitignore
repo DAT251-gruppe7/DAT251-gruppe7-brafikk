@@ -223,4 +223,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# pycache
+__pycache__
+*.pyc
+
 # End of https://www.toptal.com/developers/gitignore/api/git,macos,vscode,windows,intellij,java,java-web,maven
