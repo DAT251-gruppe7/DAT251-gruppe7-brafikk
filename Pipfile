@@ -9,6 +9,9 @@ gunicorn = "*"
 django-heroku = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+python-dotenv = "*"
+whitenoise = "*"
+
 
 [dev-packages]
 autopep8 = "*"
