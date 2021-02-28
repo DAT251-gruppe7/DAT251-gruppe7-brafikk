@@ -14,11 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+from brafikk import views
 
-from brafikk.views import TestView
+#from brafikk.views import TestView
+
+router = routers.DefaultRouter()
+router.register(r'brafikks', views.BrafikkView, 'brafikk')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TestView.as_view(), name='test')
+    #path('', TestView.as_view(), name='test')
+    path('api/', include(router.urls)),
+    #path('', views.BrafikkView, name='test')
+    
 ]
