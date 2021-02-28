@@ -26,7 +26,7 @@ router.register(r'brafikks', views.BrafikkView, 'brafikk')
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('', TestView.as_view(), name='test')
-    path('api/', include(router.urls)),
+    path('backend/', include(router.urls)),
     #path('', views.BrafikkView, name='test')
     
 ]

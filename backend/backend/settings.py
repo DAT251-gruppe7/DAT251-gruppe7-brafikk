@@ -34,7 +34,7 @@ SECRET_KEY = 'lzvm#z8x6nhqa^-6y*3drsr+q6@txf#&y8_2(4^yn%1@jn$txh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['brafikk.herokuapp.com']
+#ALLOWED_HOSTS = ['brafikk.herokuapp.com']
 ALLOWED_HOSTS = ['brafikk.herokuapp.com', '127.0.0.1:8000', 'localhost']
 
 
@@ -64,7 +64,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -143,6 +142,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
