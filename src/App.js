@@ -13,25 +13,47 @@ class App extends Component {
     super(props);
     this.state = {
       activeItem: {
-        id: "undefined",
-        title: "undefined",
-        status: "undefined"
+        title: "",
+        status: ""
       }
     }
   }
 
-  testAxios = () => {
+  componentDidMount() {
+    this.testAxiosPost();
+    this.testAxiosGet();
+    this.renderItem();
+  }
+
+
+  testAxiosPost = () => {
+    const testData = {
+      title: "Vikafjellet",
+      status: "Midlertidig stengt på grunn av sterk vind"
+    }
     axios
-      .get("backend/brafikks")
+      .post("/api/brafikks/", testData)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+    console.log("Done with POST")
+  }
+
+  testAxiosGet = () => {
+    axios
+      .get("/api/brafikks/1")
       .then(res => this.setState({ activeItem: res.data }))
       .catch(err => console.log(err));
+    console.log("Done with GET")
   }
 
   renderItem = () => {
     return (
       <div>
         <p>
-          ID: {this.state.activeItem.id}
+          Title: {this.state.activeItem.title}
         </p>
         <p>
           Status: {this.state.activeItem.status}
@@ -48,11 +70,10 @@ class App extends Component {
             Brafikk App
           </h1>
           <div>
-            {this.testAxios()}
             {this.renderItem()}
           </div>
         </header>
-      </div>
+      </div >
     );
   }
 }

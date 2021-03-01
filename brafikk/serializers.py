@@ -4,4 +4,4 @@ from .models import Brafikk
 class BrafikkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brafikk
-        fields = ('id', 'title', 'status')
+        fields = ('title', 'status')
