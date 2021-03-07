@@ -6,6 +6,11 @@ import TopHeader from './components/TopHeader'
 import LabelBottomNavigation from './components/LabelBottomNavigation'
 import ListItemLink from './components/ListItemLink'
 import InformationList from './components/InformationList';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Maps from './pages/Maps';
+import Account from './pages/Account';
+import PointsOfInterest from "./pages/PointsOfInterest";
 
 class App extends Component {
 
@@ -18,16 +23,15 @@ class App extends Component {
       }
     }
   }
-
+  /*
   componentDidMount() {
-    /*
+    
     this.testAxiosPost();
     this.testAxiosGet();
     this.renderItem();
-    */
+
   }
 
-  /*
   testAxiosPost = () => {
     const testData = {
       title: "Vikafjellet",
@@ -54,11 +58,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" >
-        <TopHeader />
-        <InformationList />
-        <LabelBottomNavigation />
-      </div >
+      <Router>
+        <div className="App" >
+          <TopHeader />
+          <Route exact path="/" render={props => (
+            <Home />
+          )} />
+          <Route path="/pointsofinterest" component={PointsOfInterest} />
+          <Route path="/maps" component={Maps} />
+          <Route path="/account" component={Account} />
+
+          <LabelBottomNavigation />
+        </div >
+      </Router>
     );
   }
 }
