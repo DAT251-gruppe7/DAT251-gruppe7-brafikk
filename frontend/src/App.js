@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import './App.css';
-import axios from "axios"
+import './Title.css'
+// import axios from "axios"
+import TopHeader from './components/TopHeader'
+import LabelBottomNavigation from './components/LabelBottomNavigation'
+import ListItemLink from './components/ListItemLink'
+import InformationList from './components/InformationList';
 
 class App extends Component {
 
@@ -47,30 +52,12 @@ class App extends Component {
   }
   */
 
-  renderItem = () => {
-    return (
-      <div>
-        <p>
-          Title: {this.state.activeItem.title}
-        </p>
-        <p>
-          Status: {this.state.activeItem.status}
-        </p>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="App" >
-        <header className="App-header">
-          <h1>
-            Brafikk App
-          </h1>
-          <div>
-            {this.renderItem()}
-          </div>
-        </header>
+        <TopHeader />
+        <InformationList />
+        <LabelBottomNavigation />
       </div >
     );
   }
