@@ -9,4 +9,4 @@ def test_capitalize_string():
     assert capitalize_string('test') == 'Test'
 
 def test_capitalize_int():
-    assert capitalize_string('test') == 'Test'
+    assert capitalize_string(20) == 'Test'
