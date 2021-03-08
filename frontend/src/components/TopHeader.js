@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, fade, darken } from '@material-ui/core/styles';
 import brafikk_logo from '../assets_frontend/brafikk_logo.png';
 import '../App.css';
-import { Card, CardMedia, AppBar, Toolbar, IconButton, InputBase } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, InputBase } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     logo: {
-        maxWidth: 100,
+        maxWidth: 90,
         marginRight:theme.spacing(0.5),
     },
     search: {
