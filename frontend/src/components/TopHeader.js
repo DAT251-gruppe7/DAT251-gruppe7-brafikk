@@ -2,12 +2,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import brafikk_logo from '../assets_frontend/brafikk_logo.png';
 import '../App.css';
-import { Card, CardContent, CardMedia } from '@material-ui/core';
+import { Card, CardMedia } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
     media: {
         height: 140,
+
     },
 });
 

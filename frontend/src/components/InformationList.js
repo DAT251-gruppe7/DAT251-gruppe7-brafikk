@@ -37,10 +37,10 @@ class InformationList extends React.Component {
             },
             {
                 id: 3,
-                title: "Whatever tunell",
+                title: "Oslofjordtunnelen",
                 status: "Åpen",
                 description: "ingen beskrivelse",
-                road: "e6",
+                road: "ev134",
                 isMountain: false
             }
         ]

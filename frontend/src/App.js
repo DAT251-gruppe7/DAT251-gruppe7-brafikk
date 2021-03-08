@@ -4,12 +4,11 @@ import './Title.css'
 // import axios from "axios"
 import TopHeader from './components/TopHeader'
 import LabelBottomNavigation from './components/LabelBottomNavigation'
-import ListItemLink from './components/ListItemLink'
-import InformationList from './components/InformationList';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Maps from './pages/Maps';
-import Account from './pages/Account';
+import Search from './pages/Search';
+import PresetRoutes from './pages/PresetRoutes';
 import PointsOfInterest from "./pages/PointsOfInterest";
 
 class App extends Component {
@@ -64,9 +63,10 @@ class App extends Component {
           <Route exact path="/" render={props => (
             <Home />
           )} />
+          <Route path="/search" component={Search} />
           <Route path="/pointsofinterest" component={PointsOfInterest} />
           <Route path="/maps" component={Maps} />
-          <Route path="/account" component={Account} />
+          <Route path="/routes" component={PresetRoutes} />
 
           <LabelBottomNavigation />
         </div >
