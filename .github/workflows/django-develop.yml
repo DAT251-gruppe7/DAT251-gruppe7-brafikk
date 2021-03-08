@@ -1,11 +1,10 @@
-name: Django CI
+name: django-develop
 
 on:
   push:
-    branches: [ master, develop ]
-    paths-ignore: [README.md]
+    branches: [ develop ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ develop ]
 
 jobs:
   build:
