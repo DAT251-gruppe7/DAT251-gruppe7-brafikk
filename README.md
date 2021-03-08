@@ -2,6 +2,9 @@
   <img src="/assets/images/brafikk.png" class="center" height="140"/>
 </p>
 
+## Status
+[![YourActionName Actions Status](https://github.com/oyjoh/DAT251-gruppe7-brafikk/workflows/django-master/badge.svg)](https://github.com/oyjoh/DAT251-gruppe7-brafikk/actions)
+
 ## Planning
 - [Kanban board](https://github.com/oyjoh/DAT251-gruppe7-brafikk/projects/1)
 - [Miro](https://miro.com/welcome/Ddp1pEl55pSpgQHEHqi676VSzTMRVSdOospUS44sKPiLzDjnuVT7OLJnaKSHkO2W)
