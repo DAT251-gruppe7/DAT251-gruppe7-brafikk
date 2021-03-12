@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path, include, re_path
-from backend.views import FrontendAppView
+from backend.views import PoiView
+
+# from rest_framework import routers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # have it as the last urlpattern for BrowserHistory urls to work
-    re_path(r'^', FrontendAppView.as_view()),
+    path('api/poi/', PoiView.as_view())
 ]
