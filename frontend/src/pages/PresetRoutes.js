@@ -1,4 +1,4 @@
-export default function PresetRoutes() {
+function PresetRoutes() {
     return (
         <div>
             <p>
@@ -7,3 +7,5 @@ export default function PresetRoutes() {
         </div>
     )
 }
+
+export default PresetRoutes;

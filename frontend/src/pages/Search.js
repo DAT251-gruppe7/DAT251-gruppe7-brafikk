@@ -1,4 +1,4 @@
-export default function Search() {
+function Search() {
     return (
         <div>
             <p>
@@ -7,3 +7,5 @@ export default function Search() {
         </div>
     )
 }
+
+export default Search;

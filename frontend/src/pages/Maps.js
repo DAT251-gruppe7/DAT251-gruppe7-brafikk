@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Maps() {
+function Maps() {
 
     const classes = useStyles();
 
@@ -34,3 +34,5 @@ export default function Maps() {
 
     )
 }
+
+export default Maps;
