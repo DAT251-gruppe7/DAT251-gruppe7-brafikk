@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import './App.css';
 import './Title.css'
 import axios from "axios"
@@ -11,19 +11,13 @@ import Search from './pages/Search';
 import PresetRoutes from './pages/PresetRoutes';
 import PointsOfInterest from "./pages/PointsOfInterest";
 
-class App extends Component {
+function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeItem: {
-        longitude: "Vikafjellet",
-        latitude: "Midlertidig stengt på grunn av sterk vind",
-        status: "OPEN"
-      }
-    }
-  }
-
+  const [activeItem, setActiveItem] = useState({
+    title: "Vikafjellet",
+    status: "Midlertidig stengt på grunn av sterk vind"
+  });
+  /*
   componentDidMount() {
     
     //this.testAxiosPost();
@@ -55,30 +49,22 @@ class App extends Component {
     console.log("Done with GET")
   }
 
+  return (
+    <Router>
+      <div className="App" >
+        <TopHeader />
+        <Route exact path="/" render={props => (
+          <Home />
+        )} />
+        <Route path="/search" component={Search} />
+        <Route path="/pointsofinterest" component={PointsOfInterest} />
+        <Route path="/maps" component={Maps} />
+        <Route path="/routes" component={PresetRoutes} />
 
-  render() {
-    return (
-      <Router>
-        <div className="App" >
-          <TopHeader />
-          <div>
-            <p>{this.state.activeItem.longitude}</p>
-            <p>{this.state.activeItem.latitude}</p>
-            <p>{this.state.activeItem.status}</p>
-          </div>
-          <Route exact path="/" render={props => (
-            <Home />
-          )} />
-          <Route path="/search" component={Search} />
-          <Route path="/pointsofinterest" component={PointsOfInterest} />
-          <Route path="/maps" component={Maps} />
-          <Route path="/routes" component={PresetRoutes} />
-
-          <LabelBottomNavigation />
-        </div >
-      </Router>
-    );
-  }
+        <LabelBottomNavigation />
+      </div >
+    </Router>
+  );
 }
 
 
