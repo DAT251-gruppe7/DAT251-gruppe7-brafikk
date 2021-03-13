@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
 import './Title.css'
-// import axios from "axios"
+import axios from "axios"
 import TopHeader from './components/TopHeader'
 import LabelBottomNavigation from './components/LabelBottomNavigation'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -17,20 +17,21 @@ class App extends Component {
     super(props);
     this.state = {
       activeItem: {
-        title: "Vikafjellet",
-        status: "Midlertidig stengt på grunn av sterk vind"
+        longitude: "Vikafjellet",
+        latitude: "Midlertidig stengt på grunn av sterk vind",
+        status: "OPEN"
       }
     }
   }
-  /*
+
   componentDidMount() {
     
-    this.testAxiosPost();
+    //this.testAxiosPost();
     this.testAxiosGet();
-    this.renderItem();
+    //this.renderItem();
 
   }
-
+ /*
   testAxiosPost = () => {
     const testData = {
       title: "Vikafjellet",
@@ -45,21 +46,26 @@ class App extends Component {
       .catch(err => console.log(err));
     console.log("Done with POST")
   }
-
+ */
   testAxiosGet = () => {
     axios
-      .get("/api/brafikks/1")
+      .get("/api/poi/?longitude=70&latitude=90")
       .then(res => this.setState({ activeItem: res.data }))
       .catch(err => console.log(err));
     console.log("Done with GET")
   }
-  */
+
 
   render() {
     return (
       <Router>
         <div className="App" >
           <TopHeader />
+          <div>
+            <p>{this.state.activeItem.longitude}</p>
+            <p>{this.state.activeItem.latitude}</p>
+            <p>{this.state.activeItem.status}</p>
+          </div>
           <Route exact path="/" render={props => (
             <Home />
           )} />
@@ -74,5 +80,7 @@ class App extends Component {
     );
   }
 }
+
+
 
 export default App;
