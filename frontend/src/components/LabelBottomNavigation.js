@@ -1,21 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import HomeIcon from '@material-ui/icons/Home';
 import MapIcon from '@material-ui/icons/Map';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import SearchIcon from '@material-ui/icons/Search';
-import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     stickToBottom: {
-        width: '100%',
-        position: 'fixed',
+        color: "#011936",
+        position: "fixed",
         bottom: 0,
+        left: 0,
+        right: 0,
+        width: "100%",
+        height: "60px",
+        "& .MuiBottomNavigationAction-root": {
+            minWidth: 'auto',
+        },
     },
-});
+}));
 
 export default function LabelBottomNavigation() {
     const classes = useStyles();
@@ -26,12 +31,11 @@ export default function LabelBottomNavigation() {
     };
 
     return (
-        <BottomNavigation value={value} onChange={handleChange} className={classes.stickToBottom}>
+        <BottomNavigation className={classes.stickToBottom} value={value} onChange={handleChange}  >
             <BottomNavigationAction label="Hjem" value="home" icon={<HomeIcon />} component={Link} to="/" />
-            <BottomNavigationAction label="Søk" value="seach" icon={<SearchIcon />} component={Link} to="/search" />
-            <BottomNavigationAction label="Points-of-interest" value="points" icon={<LocationOnIcon />} component={Link} to="/pointsofinterest" />
-            <BottomNavigationAction label="Kart" value="map" icon={<MapIcon />} component={Link} to="/maps" />
+            <BottomNavigationAction label="Steder" value="points" icon={<LocationOnIcon />} component={Link} to="/pointsofinterest" />
             <BottomNavigationAction label="Ruter" value="routes" icon={<TimelineIcon />} component={Link} to="/routes" />
+            <BottomNavigationAction label="Kart" value="map" icon={<MapIcon />} component={Link} to="/maps" />
         </BottomNavigation>
     );
 }

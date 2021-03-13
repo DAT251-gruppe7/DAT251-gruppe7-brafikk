@@ -6,25 +6,20 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.conf import settings
 
+from rest_framework.views import APIView
+from rest_framework import status
+from django.http import JsonResponse
 
-class FrontendAppView(View):
-    """
-    Serves the compiled frontend entry point (only works if you have run `yarn
-    build`).
-    """
-    index_file_path = os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')
+from .data_handler import DataHandler
 
-    def get(self, request):
-        try:
-            with open(self.index_file_path) as f:
-                return HttpResponse(f.read())
-        except FileNotFoundError:
-            logging.exception('Production build of app not found')
-            return HttpResponse(
-                """
-                This URL is only used when you have built the production
-                version of the app. Visit http://localhost:3000/ instead after
-                running `yarn start` on the frontend/ directory
-                """,
-                status=501,
-            )
+
+class PoiView(APIView):
+    def get(self, request, *args, **kwargs):
+        data_handler = DataHandler()
+
+        longitude = request.query_params.get('longitude')
+        latitude = request.query_params.get('latitude')
+
+        sit = data_handler.get_poi_by_coordinate(longitude, latitude)
+
+        return JsonResponse(sit.serialize(), status=status.HTTP_200_OK)
