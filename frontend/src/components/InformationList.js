@@ -13,38 +13,6 @@ function InformationList() {
 
     const [informations, setInformations] = useState([])
 
-    useEffect(() => {
-        let newInformationList = [
-            {
-                id: 1,
-                title: "Vikafjellet",
-                status: "Åpen",
-                description: "ingen beskrivelse",
-                road: "rv 13",
-                isMountain: true,
-            },
-            {
-                id: 2,
-                title: "Filefjell",
-                status: "Stengt",
-                description: "ingen beskrivelse",
-                road: "ev 15",
-                isMountain: true,
-            },
-            {
-                id: 3,
-                title: "Oslofjordtunnelen",
-                status: "Åpen",
-                description: "ingen beskrivelse",
-                road: "ev134",
-                isMountain: false
-            }
-        ]
-        setInformations(newInformationList)
-    });
-
-
-
 
     return (
         <div>

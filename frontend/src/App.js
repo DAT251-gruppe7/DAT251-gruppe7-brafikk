@@ -41,7 +41,7 @@ function App() {
     console.log("Done with POST")
   }
  */
-  testAxiosGet = () => {
+  const testAxiosGet = () => {
     axios
       .get("/api/poi/?longitude=70&latitude=90")
       .then(res => this.setState({ activeItem: res.data }))
