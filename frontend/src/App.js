@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import './App.css';
 import './Title.css'
-// import axios from "axios"
+import axios from "axios"
 import TopHeader from './components/TopHeader'
 import LabelBottomNavigation from './components/LabelBottomNavigation'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -11,26 +11,21 @@ import Search from './pages/Search';
 import PresetRoutes from './pages/PresetRoutes';
 import PointsOfInterest from "./pages/PointsOfInterest";
 
-class App extends Component {
+function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeItem: {
-        title: "Vikafjellet",
-        status: "Midlertidig stengt på grunn av sterk vind"
-      }
-    }
-  }
+  const [activeItem, setActiveItem] = useState({
+    title: "Vikafjellet",
+    status: "Midlertidig stengt på grunn av sterk vind"
+  });
   /*
   componentDidMount() {
     
-    this.testAxiosPost();
+    //this.testAxiosPost();
     this.testAxiosGet();
-    this.renderItem();
+    //this.renderItem();
 
   }
-
+ /*
   testAxiosPost = () => {
     const testData = {
       title: "Vikafjellet",
@@ -45,34 +40,33 @@ class App extends Component {
       .catch(err => console.log(err));
     console.log("Done with POST")
   }
-
-  testAxiosGet = () => {
+ */
+  const testAxiosGet = () => {
     axios
-      .get("/api/brafikks/1")
+      .get("/api/poi/?longitude=70&latitude=90")
       .then(res => this.setState({ activeItem: res.data }))
       .catch(err => console.log(err));
     console.log("Done with GET")
   }
-  */
 
-  render() {
-    return (
-      <Router>
-        <div className="App" >
-          <TopHeader />
-          <Route exact path="/" render={props => (
-            <Home />
-          )} />
-          <Route path="/search" component={Search} />
-          <Route path="/pointsofinterest" component={PointsOfInterest} />
-          <Route path="/maps" component={Maps} />
-          <Route path="/routes" component={PresetRoutes} />
+  return (
+    <Router>
+      <div className="App" >
+        <TopHeader />
+        <Route exact path="/" render={props => (
+          <Home />
+        )} />
+        <Route path="/search" component={Search} />
+        <Route path="/pointsofinterest" component={PointsOfInterest} />
+        <Route path="/maps" component={Maps} />
+        <Route path="/routes" component={PresetRoutes} />
 
-          <LabelBottomNavigation />
-        </div >
-      </Router>
-    );
-  }
+        <LabelBottomNavigation />
+      </div >
+    </Router>
+  );
 }
+
+
 
 export default App;

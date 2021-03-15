@@ -1,6 +1,5 @@
-from django.test import TestCase
+# test_capitalize.py
 
-# Create your tests here.
 def capitalize_string(s):
     if not isinstance(s, str):
         raise TypeError('Please provide a string')
@@ -9,3 +8,5 @@ def capitalize_string(s):
 def test_capitalize_string():
     assert capitalize_string('test') == 'Test'
 
+#def test_capitalize_int():
+    #assert capitalize_string(20) == 'Test'
