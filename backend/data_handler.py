@@ -5,8 +5,9 @@ import random
 def create_mock_sits():
     sit_list = []
     data_1 = {
-        "situation-type": "veiarbeid",
-        "situation-timestamp": "03:41...",
+        "id": 1,
+        "situation_type": "veiarbeid",
+        "situation_timestamp": "03:41...",
         "title": "Fløyfjelltunnelen",
         "lat": 66.1426,
         "lng": 50.8948,
@@ -20,8 +21,9 @@ def create_mock_sits():
     sit_list.append(sit_1)
 
     data_2 = {
-        "situation-type": "ulykke",
-        "situation-timestamp": "22:00...",
+        "id": 2,
+        "situation_type": "ulykke",
+        "situation_timestamp": "22:00...",
         "title": "Fløyfjelltunnelen",
         "lat": 60.33855,
         "lng": 5.26403,

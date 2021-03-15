@@ -54,9 +54,11 @@ function InformationList() {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
     const [informations, setInformations] = useState([]);
+    // const [isNewWarning, setIsNewWarning] = useState([])
 
 
     useEffect(() => {
+        fetchInformation();
         fetchInformation();
     }, []);
 
@@ -64,12 +66,17 @@ function InformationList() {
     const fetchInformation = () => {
         axios
             .get("/api/poi/?longitude=70&latitude=90")
-            .then(res => setInformations(informations => [...informations, res.data]))
-            .catch(err => console.log(err));
+            .then(res => {
+                setInformations(informations =>
+                    [...informations, { seen: false, expanded: false, data: res.data }])
+            })
+            .catch(err => console.log(err))
         console.log("Done with GET")
+        console.log(informations.length)
     }
-    const handleExpandClick = () => {
+    const handleExpandClick = (index) => {
         setExpanded(!expanded);
+        //informations[index].seen = true;
     };
 
     return (
@@ -79,14 +86,15 @@ function InformationList() {
                 direction="column"
                 justify="space-evenly"
                 alignItems="stretch"
+                spacing={2}
             >
-                {informations.map((info) => {
+                {informations.map((info, index) => {
                     return (
-                        <Card className={classes.root}>
-                            < CardHeader />
+                        <Card className={classes.root} key={info.id}>
+                            <CardHeader />
                             <CardContent>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {info.title}
+                                <Typography variant="h6" color="textSecondary" component="p">
+                                    <b>{!info.seen ? "(!) " + info.data.title : info.data.title}</b>
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing>
@@ -95,7 +103,13 @@ function InformationList() {
                                         clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
-                                    onClick={handleExpandClick}
+                                    onClick={() => {
+                                        setExpanded(!expanded);
+                                        let newArr = informations;
+                                        newArr[index].seen = true
+                                        newArr[index].expanded = !newArr[index].expanded
+                                        setInformations(newArr)
+                                    }}
                                     aria-expanded={expanded}
                                     aria-label="show more"
                                 >
@@ -103,11 +117,11 @@ function InformationList() {
 
                                 </IconButton>
                             </CardActions>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                            <Collapse in={info.expanded} timeout="auto" unmountOnExit>
                                 <CardContent>
                                     <Typography paragraph>
-                                        {info.info} på veg {info.road} på grunn av {info.situation_type}.
-                                        Starttid: {info.starttime}. Sluttid: {info.endtime}
+                                        {info.data.info} på veg {info.data.road} på grunn av {info.data.situation_type}.
+                                        Starttid: {info.data.starttime}. Sluttid: {info.data.endtime}
                                     </Typography>
                                 </CardContent>
                             </Collapse>
