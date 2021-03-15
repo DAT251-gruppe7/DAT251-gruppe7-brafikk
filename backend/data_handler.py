@@ -22,7 +22,7 @@ def create_mock_sits():
     data_2 = {
         "situation-type": "ulykke",
         "situation-timestamp": "22:00...",
-        "title": "Fløyfjelltunnelen",
+        "title": "Knappetunnelen",
         "lat": 60.33855,
         "lng": 5.26403,
         "color": "#ff00ff",
