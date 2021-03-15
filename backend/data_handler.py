@@ -21,10 +21,16 @@ def create_mock_sits():
     sit_list.append(sit_1)
 
     data_2 = {
+<<<<<<< HEAD
         "id": 2,
         "situation_type": "ulykke",
         "situation_timestamp": "22:00...",
         "title": "Fløyfjelltunnelen",
+=======
+        "situation-type": "ulykke",
+        "situation-timestamp": "22:00...",
+        "title": "Knappetunnelen",
+>>>>>>> develop
         "lat": 60.33855,
         "lng": 5.26403,
         "color": "#ff00ff",
