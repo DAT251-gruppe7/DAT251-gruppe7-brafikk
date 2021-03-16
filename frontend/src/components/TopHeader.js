@@ -67,7 +67,7 @@ export default function TopHeader() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" color="transparent">
+            <AppBar variant="elevation" elevation={1} position="static" color="transparent">
                 <Toolbar>
                     <img className={classes.logo} alt="brafikk" src={brafikk_logo} />
                     <div className={classes.search}>
