@@ -19,6 +19,7 @@ export default function InformationCard(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
     const [loc, setLoc] = useState({
+        title: props.title,
         lat: props.data.lat,
         lng: props.data.lng,
     });
