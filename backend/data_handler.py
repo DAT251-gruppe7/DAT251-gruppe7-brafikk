@@ -1,4 +1,4 @@
-from .situation import Situation
+from backend.situation import Situation
 from datex.datex_loader import DatexLoader
 import random
 
