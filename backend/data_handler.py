@@ -1,4 +1,5 @@
 from .situation import Situation
+from datex.datex_loader import DatexLoader
 import random
 
 
@@ -54,6 +55,9 @@ class DataHandler:
 
     def __init__(self):
         self.poi_mock_list = create_mock_sits()
+        self.datex_loader = DatexLoader()
 
-    def get_poi_by_coordinate(self, lon, lat):
+    def get_poi_by_coordinate(self, lat, lng):
+        response_object = self.datex_loader.get_poi(lat, lng)
+
         return random.choice(self.poi_mock_list)
