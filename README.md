@@ -37,3 +37,4 @@
 
 ## Current technology stack
 ![Stack](/assets/images/temp_stack.png)
+

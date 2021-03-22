@@ -3,44 +3,44 @@ import random
 
 
 def create_mock_sits():
-    sit_list = []
-    data_1 = {
-        "id": 1,
-        "situation_type": "veiarbeid",
-        "situation_timestamp": "03:41...",
+    sit_list = [
+        Situation({
+        "situationType": "veiarbeid",
+        "situationTimestamp": "03:41",
         "title": "Fløyfjelltunnelen",
         "lat": 66.1426,
         "lng": 50.8948,
-        "color": "#ff00ff",
+        "color": "#f9dc5c",
         "road": "E39",
         "info": "Veiarbeid ved nordre åpning",
-        "starttime": "20:00..",
-        "endtime": "23:00..",
-    }
-    sit_1 = Situation(data_1)
-    sit_list.append(sit_1)
-
-    data_2 = {
-<<<<<<< HEAD
-        "id": 2,
-        "situation_type": "ulykke",
-        "situation_timestamp": "22:00...",
-        "title": "Fløyfjelltunnelen",
-=======
-        "situation-type": "ulykke",
-        "situation-timestamp": "22:00...",
+        "startTime": "20:00",
+        "endTime": "23:00",
+    }), 
+    Situation({
+        "situationType": "ulykke",
+        "situationTimestamp": "22:00...",
         "title": "Knappetunnelen",
->>>>>>> develop
         "lat": 60.33855,
         "lng": 5.26403,
-        "color": "#ff00ff",
-        "road": "Fylkesvei 557",
+        "color": "#ed254e",
+        "road": "F557",
         "info": "Stengt i retning sentrum",
-        "starttime": "",
-        "endtime": "",
-    }
-    sit_2 = Situation(data_2)
-    sit_list.append(sit_2)
+        "startTime": "",
+        "endTime": "",
+    }),
+    Situation({
+        "situationType": "",
+        "situationTimestamp": "",
+        "title": "Arnanipatunnelen",
+        "lat": 0,
+        "lng": 0,
+        "color": "#c2eabd",
+        "road": "E16",
+        "info": "",
+        "startTime": "",
+        "endTime": "",
+    }),
+    ]
 
     return sit_list
 
