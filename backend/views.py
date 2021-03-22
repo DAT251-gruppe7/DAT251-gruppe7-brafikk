@@ -43,6 +43,7 @@ class PoiView(APIView):
         longitude = request.query_params.get('longitude')
         latitude = request.query_params.get('latitude')
 
-        sit = data_handler.get_poi_by_coordinate(longitude, latitude)
-
-        return JsonResponse(sit.serialize(), status=status.HTTP_200_OK)
+        sit = data_handler.get_poi_by_coordinate(latitude, longitude)
+        print('hello')
+        #print(sit)
+        return JsonResponse(sit.serialize_general_data(), status=status.HTTP_200_OK)

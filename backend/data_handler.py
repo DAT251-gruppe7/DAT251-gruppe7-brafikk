@@ -1,5 +1,5 @@
-from backend.situation import Situation
-from datex.datex_loader import DatexLoader
+from backend.datex.situation import Situation
+from backend.datex.datex_loader import DatexLoader
 import random
 
 
@@ -58,6 +58,6 @@ class DataHandler:
         self.datex_loader = DatexLoader()
 
     def get_poi_by_coordinate(self, lat, lng):
-        response_object = self.datex_loader.get_poi(lat, lng)
-
-        return random.choice(self.poi_mock_list)
+        sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
+        return sit_obj
+        #return random.choice(self.poi_mock_list)
