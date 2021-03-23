@@ -36,7 +36,6 @@ class Situation:
             recurringTimePeriodOfDay = get_attr(validPeriod, 'recurringTimePeriodOfDay')
             startTime = get_attr(recurringTimePeriodOfDay, 'startTimeOfPeriod', target='text')
             endTime = get_attr(recurringTimePeriodOfDay, 'endTimeOfPeriod', target='text')
-            print(f'stert timmmme: {startTime}')
             res['startTime'] = startTime
             res['endTime'] = endTime
             res['color'] = '#f9dc5c'

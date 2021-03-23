@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea } from "@material-ui/core";
-import { Grid, Paper, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function InformationCard(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
+    const [title, setTitle] = useState(props.title);
     const [loc, setLoc] = useState({
-        title: props.title,
         lat: props.data.lat,
         lng: props.data.lng,
     });
@@ -44,11 +44,13 @@ export default function InformationCard(props) {
 
     const [expanded, setExpanded] = useState(false);
     const showTime =
-        data.startTime === "" ? (
-            ""
+        (data.startTime === "" || data.startTime === undefined) ? (
+            <Typography variant="body2" align="left">
+                
+            </Typography>
         ) : (
             <Typography variant="body2" align="left">
-                {data.startTime}-{data.endTime}
+                {data.startTime.substr(0,5)}-{data.endTime.substr(0,5)}
             </Typography>
         );
 
@@ -59,11 +61,11 @@ export default function InformationCard(props) {
             <Grid container>
                 <Grid item xs={11}>
                     <Typography variant="h6" align="left">
-                        {data.title}
+                        {title}
                     </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                    <Typography variant="body2" align="left">
+                    <Typography variant="body2" align="right">
                         {data.road}
                     </Typography>
                 </Grid>
