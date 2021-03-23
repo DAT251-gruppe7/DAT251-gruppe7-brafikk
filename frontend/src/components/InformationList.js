@@ -1,8 +1,8 @@
 import React from "react";
 import '../App.css';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import InformationCard from './InformationCard';
-import { List, ListItem } from "@material-ui/core";
+import {List, ListItem} from "@material-ui/core";
 
 
 const locs = {
@@ -21,6 +21,18 @@ const locs = {
     "Krokdal": {
         "lat": 59.759533,
         "lng": 11.294941,
+    },
+    "Mell": {
+        "lat": 59.408787,
+        "lng": 10.661222,
+    },
+    "Torvastad" : {
+        "lat" : 59.380585,
+        "lng" : 5.2414513,
+    },
+    "Fjellsrud" : {
+        "lat" : 59.759533,
+        "lng" : 11.294941,
     }
 }
 
@@ -28,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    list:{
+    list: {
         marginBottom: 45,
     },
-    grid:{
+    grid: {
         paddingTop: 0,
         paddingBot: 0,
         paddingLeft: 5,
@@ -46,7 +58,7 @@ function InformationList() {
         <div className={classes.root}>
             <List className={classes.list}
             >
-                {Object.entries(locs).map(([key,loc], idx) => {
+                {Object.entries(locs).map(([key, loc], idx) => {
                     return (
                         <ListItem key={idx} className={classes.grid}>
                             <InformationCard title={key} data={loc}/>
