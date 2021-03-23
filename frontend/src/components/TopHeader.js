@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, fade, darken } from '@material-ui/core/styles';
+import { makeStyles, darken } from '@material-ui/core/styles';
 import brafikk_logo from '../assets_frontend/brafikk_logo.png';
 import '../App.css';
 import { AppBar, Toolbar, IconButton, InputBase } from '@material-ui/core';

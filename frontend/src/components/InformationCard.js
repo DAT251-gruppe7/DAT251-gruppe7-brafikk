@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea } from "@material-ui/core";
-import { Grid, Paper, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({

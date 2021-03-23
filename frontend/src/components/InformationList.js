@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import InformationCard from './InformationCard';
+import { List, ListItem } from "@material-ui/core";
 
 
 const locs = {
-    "RandomSted": {
+    "Random Sted": {
         "lat": 61.42070084171688,
         "lng": 5.4875439277981926,
     },
@@ -28,8 +28,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    list:{
+        marginBottom: 45,
+    },
     grid:{
-        paddingTop: 5,
+        paddingTop: 0,
+        paddingBot: 0,
         paddingLeft: 5,
         paddingRight: 5,
     },
@@ -40,19 +44,16 @@ function InformationList() {
 
     return (
         <div className={classes.root}>
-            <Grid container 
-                direction="column"
-                justify="space-evenly"
-                alignItems="stretch"
+            <List className={classes.list}
             >
                 {Object.entries(locs).map(([key,loc], idx) => {
                     return (
-                        <Grid key={idx} item className={classes.grid}>
+                        <ListItem key={idx} className={classes.grid}>
                             <InformationCard title={key} data={loc}/>
-                        </Grid>
+                        </ListItem>
                     )
                 })}
-            </Grid>
+            </List>
         </div>
 
     )
