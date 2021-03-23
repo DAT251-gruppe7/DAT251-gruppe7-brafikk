@@ -20,44 +20,54 @@ class Situation:
         self.data = data  # XML-tree
 
     def serialize_general_data(self):
-        if self.data == None:
-            return {
-                "title": "No situation on coordinate. Display title and info stored frontend",
-                "startTime": "",
-                "endTime": "",
-                "info": "",
-                "road": "",
-                "color": "#c2eabd",
-            }
+        # store result in python dict for easy json converting
+        res = {"title": "",
+               "startTime": "",
+               "endTime": "",
+               "info": "",
+               "road": "",
+               "color": "#c2eabd", }
+
+        if self.data is None:
+            res['title'] = 'No situation on coordinate. Display title and info stored frontend'
+            res['color'] = '#c2eabd'
+            return res
+
         # unique ID
         title = self.data.attrib['id']
+        res['title'] = title
+
+        # SituationRecord
+        situationRecord = get_attr(self.data, 'situationRecord')
 
         # start time and end time
-        situationRecord = get_attr(self.data, 'situationRecord')
         validity = get_attr(situationRecord, 'validity')
         validityTimeSpecification = get_attr(validity, 'validityTimeSpecification')
+
         validPeriod = get_attr(validityTimeSpecification, 'validPeriod')
-        recurringTimePeriodOfDay = get_attr(validPeriod, 'recurringTimePeriodOfDay')
-        startTime = get_attr(recurringTimePeriodOfDay, 'startTimeOfPeriod', target='text')
-        endTime = get_attr(recurringTimePeriodOfDay, 'endTimeOfPeriod', target='text')
+        if validPeriod is not None:
+            # TODO: sit might have multiple recurring periods
+            recurringTimePeriodOfDay = get_attr(validPeriod, 'recurringTimePeriodOfDay')
+            startTime = get_attr(recurringTimePeriodOfDay, 'startTimeOfPeriod', target='text')
+            endTime = get_attr(recurringTimePeriodOfDay, 'endTimeOfPeriod', target='text')
+            print(f'stert timmmme: {startTime}')
+            res['startTime'] = startTime
+            res['endTime'] = endTime
+            res['color'] = '#ffa500'
+        else:
+            res['color'] = '#ff2500'
 
         # info
         generalPublicComment = get_attr(situationRecord, 'generalPublicComment')
         comment = get_attr(generalPublicComment, 'comment')
         info = get_attr(comment, 'values')[0].text
+        res['info'] = info
 
         # road identification
         groupOfLocations = get_attr(situationRecord, 'groupOfLocations')
         locationExtension = get_attr(groupOfLocations, 'locationExtension')
         locationExtension = get_attr(locationExtension, 'locationExtension')
         road = locationExtension[0].text
-
-        # TODO: fetch color
-        # store result in python dict for easy json converting
-        res = {'title': title,
-               'startTime': startTime,
-               'endTime': endTime,
-               'info': info,
-               'road': road}
+        res['road'] = road
 
         return res
