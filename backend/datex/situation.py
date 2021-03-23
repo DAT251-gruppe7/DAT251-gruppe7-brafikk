@@ -1,20 +1,6 @@
 from datetime import datetime
 
 
-def get_attr(tree, attr_name, target=None):
-    ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    elem = tree.find(ns + attr_name)
-    if target == 'text' and elem is not None:
-        elem = elem.text
-    if target == 'date' and elem is not None:
-        elem = datetime.strptime(elem.text, '%Y-%m-%dT%H:%M:%S%z')
-    if target == 'float' and elem is not None:
-        elem = float(elem.text)
-    if target == 'int' and elem is not None:
-        elem = int(elem)
-    return elem
-
-
 class Situation:
     def __init__(self, data=None):
         self.data = data  # XML-tree
@@ -53,9 +39,9 @@ class Situation:
             print(f'stert timmmme: {startTime}')
             res['startTime'] = startTime
             res['endTime'] = endTime
-            res['color'] = '#ffa500'
+            res['color'] = '#f9dc5c'
         else:
-            res['color'] = '#ff2500'
+            res['color'] = '#ed254e'
 
         # info
         generalPublicComment = get_attr(situationRecord, 'generalPublicComment')
@@ -71,3 +57,17 @@ class Situation:
         res['road'] = road
 
         return res
+
+
+def get_attr(tree, attr_name, target=None):
+    ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
+    elem = tree.find(ns + attr_name)
+    if target == 'text' and elem is not None:
+        elem = elem.text
+    if target == 'date' and elem is not None:
+        elem = datetime.strptime(elem.text, '%Y-%m-%dT%H:%M:%S%z')
+    if target == 'float' and elem is not None:
+        elem = float(elem.text)
+    if target == 'int' and elem is not None:
+        elem = int(elem)
+    return elem

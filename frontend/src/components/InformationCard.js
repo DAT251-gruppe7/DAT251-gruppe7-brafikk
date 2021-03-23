@@ -32,7 +32,7 @@ export default function InformationCard(props) {
     }, []);
 
     const fetchInformation = async () => {
-        const res = await axios.get(`/api/poi/?longitude=${loc.lat}&latitude=${loc.lng}`)
+        const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
         setData(res.data);
         setLoading(false);
