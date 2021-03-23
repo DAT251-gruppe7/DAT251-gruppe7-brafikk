@@ -44,18 +44,20 @@ export default function InformationCard(props) {
 
     const [expanded, setExpanded] = useState(false);
     const showTime =
-        (data.startTime === "" || data.startTime === undefined) ? (
+        (data.startTime === "" || data.startTime === undefined) ? (
             <Typography variant="body2" align="left">
-                
+
             </Typography>
         ) : (
             <Typography variant="body2" align="left">
-                {data.startTime.substr(0,5)}-{data.endTime.substr(0,5)}
+                {data.startTime.substr(0, 5)}-{data.endTime.substr(0, 5)}
             </Typography>
         );
 
-    const cardInfo = loading ? 
-        <CardContent><CircularProgress /></CardContent> 
+    const cardInfo = loading ?
+        <CardContent><Grid container justify="center">
+            <CircularProgress />
+        </Grid></CardContent>
         :
         <CardContent>
             <Grid container>

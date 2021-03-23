@@ -60,7 +60,7 @@ function InformationList() {
             >
                 {Object.entries(locs).map(([key, loc], idx) => {
                     return (
-                        <ListItem key={idx} className={classes.grid}>
+                        <ListItem alignItems="center" key={idx} className={classes.grid}>
                             <InformationCard title={key} data={loc}/>
                         </ListItem>
                     )
