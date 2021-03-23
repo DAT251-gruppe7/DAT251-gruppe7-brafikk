@@ -3,6 +3,7 @@ name: django-master
 on:
   push:
     branches: [ master ]
+    paths-ignore: [README.md, 'assets/**']
   pull_request:
     branches: [ master ]
 

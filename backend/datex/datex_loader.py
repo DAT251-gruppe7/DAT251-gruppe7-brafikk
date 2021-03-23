@@ -6,7 +6,8 @@ from backend.datex.situation import Situation
 
 
 class DatexLoader:
-    root_folder = 'backend/datex/DatexSampleData_20171023'
+    #root_folder = 'backend/datex/DatexSampleData_20171023'
+    root_folder = 'backend/datex/DatexSampleData_20210323'
     document_name = 'GetSituation.xml'
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
     path = f"{root_folder}/{document_name}"
