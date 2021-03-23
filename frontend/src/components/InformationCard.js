@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function InformationCard(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
+    const [title, setTitle] = useState(props.title);
     const [loc, setLoc] = useState({
-        title: props.title,
         lat: props.data.lat,
         lng: props.data.lng,
     });
@@ -34,6 +34,7 @@ export default function InformationCard(props) {
     const fetchInformation = async () => {
         const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
+        console.log(res.data);
         setData(res.data);
         setLoading(false);
     };
@@ -45,7 +46,9 @@ export default function InformationCard(props) {
     const [expanded, setExpanded] = useState(false);
     const showTime =
         data.startTime === "" ? (
-            ""
+            <Typography variant="body2" align="left">
+                
+            </Typography>
         ) : (
             <Typography variant="body2" align="left">
                 {data.startTime}-{data.endTime}
@@ -59,11 +62,11 @@ export default function InformationCard(props) {
             <Grid container>
                 <Grid item xs={11}>
                     <Typography variant="h6" align="left">
-                        {data.title}
+                        {title}
                     </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                    <Typography variant="body2" align="left">
+                    <Typography variant="body2" align="right">
                         {data.road}
                     </Typography>
                 </Grid>

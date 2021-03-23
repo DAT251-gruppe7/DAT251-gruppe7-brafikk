@@ -6,7 +6,7 @@ import InformationCard from './InformationCard';
 
 
 const locs = {
-    "Random sted": {
+    "RandomSted": {
         "lat": 61.42070084171688,
         "lng": 5.4875439277981926,
     },
