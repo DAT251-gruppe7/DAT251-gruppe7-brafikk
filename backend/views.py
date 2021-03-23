@@ -37,6 +37,16 @@ class FrontendAppView(View):
 
 
 class PoiView(APIView):
+    """
+    @param latitude:
+    @param longitude:
+
+    Returns a serialized situation object on given latitude and longitude.
+    Empty serialized object with color green is returned if there is no stored situation
+    on given latitude and longitude
+    TODO: check that params are valid numbers, and return something smart if they are not
+    """
+
     def get(self, request, *args, **kwargs):
         data_handler = DataHandler()
 

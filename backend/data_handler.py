@@ -46,17 +46,29 @@ def create_mock_sits():
     return sit_list
 
 
-class DataHandler:
+class Singleton(type):
+    _instances = {}
 
-    def __new__(self):
-        if not hasattr(self, 'instance'):
-            self.instance = super().__new__(self)
-        return self.instance
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class DataHandler(metaclass=Singleton):
+
+    # def __new__(self):
+    #     if not hasattr(self, 'instance'):
+    #         self.instance = super().__new__(self)
+    #     return self.instance
 
     def __init__(self):
+        #print('Created data_handler, should only happen once')
         self.poi_mock_list = create_mock_sits()
         self.datex_loader = DatexLoader()
 
     def get_poi_by_coordinate(self, lat, lng):
         sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
+        #print(f'Datex_loader: {id(self.datex_loader)}')
+        #print(self.datex_loader)
         return sit_obj.serialize_general_data()

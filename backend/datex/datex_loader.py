@@ -5,8 +5,6 @@ from scipy.spatial import KDTree
 from backend.datex.situation import Situation
 
 
-
-
 class DatexLoader:
     root_folder = 'backend/datex/DatexSampleData_20171023'
     document_name = 'GetSituation.xml'
@@ -15,7 +13,7 @@ class DatexLoader:
 
     def __init__(self):
 
-        print(f'path {DatexLoader.path}')
+        #print(f'path {DatexLoader.path}')
         self.tree = ET.parse(self.path)
         self.root = self.tree.getroot()
 
@@ -37,7 +35,8 @@ class DatexLoader:
         self.KDtree = KDTree(xpoints)
 
     def get_poi(self, lat, lng):
-
+        # TODO: check xml flag and rebuild KDTree if necessary
+        #print(f'DATEX LOADER ID: {id(self)}')
         """
         kdtree = KDTree(xpoints)
         start = time.process_time()
@@ -47,13 +46,12 @@ class DatexLoader:
             for res in results:
                 print(loc_to_sit[res][2].info['comment'])
         """
-        poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.1)
+        poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.0001)
         # print(poi_list)
-        for p in poi_list[0]:
-            pass
-            # print(p)
-            # print(self.points[p])
-        return self.points[poi_list[0][0]]  # TODO: revisit
+        if len(poi_list[0]) > 0:
+            return self.points[poi_list[0][0]]  # TODO: revisit
+        else:
+            return lat, lng, Situation()
 
     def get_attr(self, tree, attr_name, target=None):
         elem = tree.find(DatexLoader.ns + attr_name)
