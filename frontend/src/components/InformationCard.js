@@ -34,7 +34,6 @@ export default function InformationCard(props) {
     const fetchInformation = async () => {
         const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
-        console.log(res.data);
         setData(res.data);
         setLoading(false);
     };
@@ -45,13 +44,13 @@ export default function InformationCard(props) {
 
     const [expanded, setExpanded] = useState(false);
     const showTime =
-        data.startTime === "" ? (
+        (data.startTime === "" || data.startTime === undefined) ? (
             <Typography variant="body2" align="left">
                 
             </Typography>
         ) : (
             <Typography variant="body2" align="left">
-                {data.startTime}-{data.endTime}
+                {data.startTime.substr(0,5)}-{data.endTime.substr(0,5)}
             </Typography>
         );
 
