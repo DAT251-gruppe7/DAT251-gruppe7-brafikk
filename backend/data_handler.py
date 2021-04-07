@@ -63,7 +63,7 @@ class DataHandler(metaclass=Singleton):
     #     return self.instance
 
     def __init__(self):
-        print('Created data_handler, should only happen once')
+        #print('Created data_handler, should only happen once')
         self.poi_mock_list = create_mock_sits()
         self.datex_loader = DatexLoader()
 

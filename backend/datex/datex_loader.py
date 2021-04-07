@@ -23,9 +23,9 @@ class DatexLoader():
         self.DATEX_PASSWORD = os.environ.get('DATEX_PASSWORD')
         if self.DATEX_USERNAME == None:
             config = configparser.ConfigParser()
-            config.read('config.ini')
-            self.DATEX_USERNAME = config.get('DATEX', 'USERNAME')
-            self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
+            if config.read('config.ini'):
+                self.DATEX_USERNAME = config.get('DATEX', 'USERNAME')
+                self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
 
         # print(f'path {DatexLoader.path}')
         self.tree = ET.parse(self.path)
