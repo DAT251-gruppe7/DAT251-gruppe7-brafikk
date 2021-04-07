@@ -9,6 +9,7 @@ import Maps from './pages/Maps';
 import Search from './pages/Search';
 import PresetRoutes from './pages/PresetRoutes';
 import PointsOfInterest from "./pages/PointsOfInterest";
+import SettingsPage from './pages/SettingsPage';
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
         <Route path="/pointsofinterest" component={PointsOfInterest} />
         <Route path="/maps" component={Maps} />
         <Route path="/routes" component={PresetRoutes} />
+        <Route path="/settingspage" component={SettingsPage} />
+
 
         <LabelBottomNavigation />
       </div >
