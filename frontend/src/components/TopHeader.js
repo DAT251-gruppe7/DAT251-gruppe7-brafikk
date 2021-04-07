@@ -1,10 +1,11 @@
 import React from 'react';
-import { makeStyles, fade, darken } from '@material-ui/core/styles';
+import { makeStyles, darken } from '@material-ui/core/styles';
 import brafikk_logo from '../assets_frontend/brafikk_logo.png';
 import '../App.css';
 import { AppBar, Toolbar, IconButton, InputBase } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         maxWidth: 90,
-        marginRight:theme.spacing(0.5),
+        marginRight: theme.spacing(0.5),
     },
     search: {
         position: 'relative',
@@ -48,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          width: '12ch',
-          '&:focus': {
-            width: '20ch',
-          },
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
         },
-      },
+    },
     sectionMobile: {
         display: 'flex',
         [theme.breakpoints.up('md')]: {
@@ -67,7 +68,7 @@ export default function TopHeader() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" color="transparent">
+            <AppBar variant="elevation" elevation={1} position="static" color="transparent">
                 <Toolbar>
                     <img className={classes.logo} alt="brafikk" src={brafikk_logo} />
                     <div className={classes.search}>
@@ -90,6 +91,8 @@ export default function TopHeader() {
                             aria-label="account of current user"
                             aria-haspopup="true"
                             color="inherit"
+                            component={Link}
+                            to="/settingspage"
                         >
                             <SettingsIcon />
                         </IconButton>

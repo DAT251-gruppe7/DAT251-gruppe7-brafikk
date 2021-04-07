@@ -6,7 +6,7 @@ def capitalize_string(s):
     return s.capitalize()
 
 def test_capitalize_string():
-    assert capitalize_string('test') == 'Test'
+    assert capitalize_string('hello,world') == 'Hello,world'
 
 #def test_capitalize_int():
     #assert capitalize_string(20) == 'Test'

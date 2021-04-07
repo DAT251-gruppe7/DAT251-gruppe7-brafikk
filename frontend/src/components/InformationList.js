@@ -1,78 +1,62 @@
-import React, { useState, useEffect } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from '@material-ui/core/Typography';
-import FilterHdrIcon from '@material-ui/icons/FilterHdr';
-import TollIcon from '@material-ui/icons/Toll';
-import WarningIcon from '@material-ui/icons/Warning';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import React from "react";
 import '../App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import InformationCard from './InformationCard';
+import { List, ListItem } from "@material-ui/core";
 
+
+const locs = {
+    "Random Sted": {
+        "lat": 61.42070084171688,
+        "lng": 5.4875439277981926,
+    },
+    "Sigerfjordtunnelen": {
+        "lat": 68.63514,
+        "lng": 15.633203,
+    },
+    "Snubba": {
+        "lat": 68.53292,
+        "lng": 17.188206,
+    },
+    "Krokdal": {
+        "lat": 59.759533,
+        "lng": 11.294941,
+    }
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    list:{
+        marginBottom: 45,
+    },
+    grid:{
+        paddingTop: 0,
+        paddingBot: 0,
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+}));
 
 function InformationList() {
-
-    const [informations, setInformations] = useState([])
-
-    useEffect(() => {
-        let newInformationList = [
-            {
-                id: 1,
-                title: "Vikafjellet",
-                status: "Åpen",
-                description: "ingen beskrivelse",
-                road: "rv 13",
-                isMountain: true,
-            },
-            {
-                id: 2,
-                title: "Filefjell",
-                status: "Stengt",
-                description: "ingen beskrivelse",
-                road: "ev 15",
-                isMountain: true,
-            },
-            {
-                id: 3,
-                title: "Oslofjordtunnelen",
-                status: "Åpen",
-                description: "ingen beskrivelse",
-                road: "ev134",
-                isMountain: false
-            }
-        ]
-        setInformations(newInformationList)
-    });
-
-
-
+    const classes = useStyles();
 
     return (
-        <div>
-            <AppBar position="static">
-                <div style={{ flexGrow: 1 }}>
-
-                    {informations.map((info) => {
-                        return (
-                            <Toolbar className="Toolbar" key={info.id}>
-                                {info.isMountain && <FilterHdrIcon />}
-                                {!info.isMountain && <TollIcon />}
-                                <Typography style={{ flexGrow: 1 }}>
-                                    {info.title}
-                                </Typography>
-                                <Typography>
-                                    {info.status}
-                                </Typography>
-                                {info.status === "Åpen" && <CheckCircleIcon />}
-                                {info.status !== "Åpen" && <WarningIcon />}
-                            </Toolbar>
-                        )
-                    })}
-                </div>
-
-            </AppBar>
+        <div className={classes.root}>
+            <List className={classes.list}
+            >
+                {Object.entries(locs).map(([key,loc], idx) => {
+                    return (
+                        <ListItem alignItems="center" key={idx} className={classes.grid}>
+                            <InformationCard title={key} data={loc}/>
+                        </ListItem>
+                    )
+                })}
+            </List>
         </div>
-    )
 
+    )
 }
 
 export default InformationList;

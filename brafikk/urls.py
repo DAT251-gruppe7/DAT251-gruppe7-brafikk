@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path, include, re_path
 from backend.views import PoiView
+from backend.views import FrontendAppView
+from django.views.generic import TemplateView
 
 # from rest_framework import routers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/poi/', PoiView.as_view())
+    path('api/poi/', PoiView.as_view()),
+    re_path(r'^', FrontendAppView.as_view()),
 ]
