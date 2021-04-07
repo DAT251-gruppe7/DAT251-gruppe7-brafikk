@@ -1,20 +1,33 @@
 import xml.etree.ElementTree as ET
+import os
+
+import configparser
+
 from datetime import datetime
 
 from scipy.spatial import KDTree
 from backend.datex.situation import Situation
 
 
-class DatexLoader:
+class DatexLoader():
     root_folder = 'backend/datex/DatexSampleData_20171023'
-    #root_folder = 'backend/datex/DatexSampleData_20210323'
+    # root_folder = 'backend/datex/DatexSampleData_20210323'
     document_name = 'GetSituation.xml'
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
     path = f"{root_folder}/{document_name}"
 
     def __init__(self):
 
-        #print(f'path {DatexLoader.path}')
+        # try to fetch secrets from environment variable, else use local config file
+        self.DATEX_USERNAME = os.environ.get('DATEX_USERNAME')
+        self.DATEX_PASSWORD = os.environ.get('DATEX_PASSWORD')
+        if self.DATEX_USERNAME == None:
+            config = configparser.ConfigParser()
+            config.read('config.ini')
+            self.DATEX_USERNAME = config.get('DATEX', 'USERNAME')
+            self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
+
+        # print(f'path {DatexLoader.path}')
         self.tree = ET.parse(self.path)
         self.root = self.tree.getroot()
 
@@ -37,7 +50,7 @@ class DatexLoader:
 
     def get_poi(self, lat, lng):
         # TODO: check xml flag and rebuild KDTree if necessary
-        #print(f'DATEX LOADER ID: {id(self)}')
+        # print(f'DATEX LOADER ID: {id(self)}')
         """
         kdtree = KDTree(xpoints)
         start = time.process_time()
