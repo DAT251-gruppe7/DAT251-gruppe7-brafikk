@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import InformationCard from './InformationCard';
 import { List, ListItem } from "@material-ui/core";
-
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import DialogSearchPosition from './DialogSearchPosition'
 
 const locs = {
     "Random Sted": {
@@ -28,10 +30,15 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    list:{
+    fab: {
+        position: 'absolute',
+        bottom: theme.spacing(10),
+        right: theme.spacing(4),
+    },
+    list: {
         marginBottom: 45,
     },
-    grid:{
+    grid: {
         paddingTop: 0,
         paddingBot: 0,
         paddingLeft: 5,
@@ -41,21 +48,32 @@ const useStyles = makeStyles((theme) => ({
 
 function InformationList() {
     const classes = useStyles();
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    }
 
     return (
         <div className={classes.root}>
             <List className={classes.list}
             >
-                {Object.entries(locs).map(([key,loc], idx) => {
+                {Object.entries(locs).map(([key, loc], idx) => {
                     return (
                         <ListItem alignItems="center" key={idx} className={classes.grid}>
-                            <InformationCard title={key} data={loc}/>
+                            <InformationCard title={key} data={loc} />
                         </ListItem>
                     )
                 })}
             </List>
-        </div>
 
+            <DialogSearchPosition />
+
+        </div>
     )
 }
 
