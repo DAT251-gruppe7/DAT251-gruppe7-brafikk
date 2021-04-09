@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../App.css';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import InformationCard from './InformationCard';
 import { List, ListItem } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab';
@@ -23,6 +23,18 @@ const locs = {
     "Krokdal": {
         "lat": 59.759533,
         "lng": 11.294941,
+    },
+    "Mell": {
+        "lat": 59.408787,
+        "lng": 10.661222,
+    },
+    "Torvastad" : {
+        "lat" : 59.380585,
+        "lng" : 5.2414513,
+    },
+    "Fjellsrud" : {
+        "lat" : 59.759533,
+        "lng" : 11.294941,
     }
 }
 

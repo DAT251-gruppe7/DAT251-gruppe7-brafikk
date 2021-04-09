@@ -12,6 +12,8 @@ from django.http import JsonResponse
 
 from .data_handler import DataHandler
 
+data_handler = DataHandler()
+
 
 class FrontendAppView(View):
     """
@@ -48,8 +50,6 @@ class PoiView(APIView):
     """
 
     def get(self, request, *args, **kwargs):
-        data_handler = DataHandler()
-
         latitude = request.query_params.get('latitude')
         longitude = request.query_params.get('longitude')
 
