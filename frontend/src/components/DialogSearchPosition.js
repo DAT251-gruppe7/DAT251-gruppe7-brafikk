@@ -25,7 +25,7 @@ export default function DialogSearchPosition() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [locationSearch, setLocationSearch] = React.useState("");
-    const apiKey = "7d0739e810884040b35af0717456ed10";
+    const apiKey = process.env.REACT_APP_GEOAPIFY_API_KEY;
 
 
     const handleClickOpen = () => {
