@@ -21,15 +21,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DialogSearchPosition() {
+
+
+
+
+export default function DialogSearchPosition(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [locationSearch, setLocationSearch] = React.useState("");
+    // Do this one extra step
+    //const positions = props.parentLatLon;
+    //const [latLon, setLatLon] = React.useState({ positions });
     const apiKey = process.env.REACT_APP_GEOAPIFY_API_KEY;
 
+    const callBackFunction = props.parentCallBack;
 
     const handleClickOpen = () => {
         setOpen(true);
+        //console.log(latLon)
     };
 
     const handleClose = () => {
@@ -44,13 +53,31 @@ export default function DialogSearchPosition() {
     const handleSearch = () => {
         console.log(locationSearch)
         const params = {
-            text: locationSearch,
-            apiKey: apiKey
+            name: locationSearch,
+            country: "Norway",
+            apiKey: apiKey,
         }
         axios.get("https://api.geoapify.com/v1/geocode/search", { params })
             .then(res => {
+                console.log(locationSearch)
                 console.log(res.data)
-                console.log(res.data.features[0].geometry.coordinates)
+                // TODO we take the first 
+                //console.log(latLon)
+                /*
+                setLatLon({
+                    ...latLon,
+                    "hi": {
+                        "lat": res.data.features[0].properties.lat,
+                        "lng": res.data.features[0].properties.lon,
+                    }
+                }); */
+                let test = {};
+                test[locationSearch] = {
+                    "lat": res.data.features[0].properties.lat,
+                    "lng": res.data.features[0].properties.lon,
+                }
+                console.log(test)
+                callBackFunction(test)
             })
             .catch(err => {
                 console.error(err)
