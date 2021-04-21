@@ -71,6 +71,7 @@ class DataHandler(metaclass=Singleton):
         # print('Created data_handler, should only happen once')
         self.poi_mock_list = create_mock_sits()
         self.datex_loader = DatexLoader()
+        self.path_cache = {}
 
     def get_poi_by_coordinate(self, lat, lng):
         sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
@@ -85,12 +86,16 @@ class DataHandler(metaclass=Singleton):
             if config.read('config.ini'):
                 self.GEOAPIFY_API_KEY = config.get('GEOAPIFY', 'API_KEY')
 
-        response = requests.get(
-            f'https://api.geoapify.com/v1/routing?waypoints={start_latitude},{start_longitude}|{end_latitude},{end_longitude}&mode=drive&apiKey={self.GEOAPIFY_API_KEY}')
+        key = (start_latitude, start_longitude, end_latitude, end_longitude)
+        if key in self.path_cache:
+            coords = self.path_cache[key]
+        else:
+            response = requests.get(
+                f'https://api.geoapify.com/v1/routing?waypoints={start_latitude},{start_longitude}|{end_latitude},{end_longitude}&mode=drive&apiKey={self.GEOAPIFY_API_KEY}')
+            json_data = response.json()
 
-        json_data = response.json()
-
-        coords = json_data['features'][0]['geometry']['coordinates'][0]
+            coords = json_data['features'][0]['geometry']['coordinates'][0]
+            self.path_cache[key] = coords
 
         sits = defaultdict()
         for lng, lat in coords:
