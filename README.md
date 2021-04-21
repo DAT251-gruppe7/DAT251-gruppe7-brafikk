@@ -9,6 +9,7 @@
 ## Planning
 - [Kanban board](https://github.com/oyjoh/DAT251-gruppe7-brafikk/projects/1)
 - [Miro](https://miro.com/welcome/Ddp1pEl55pSpgQHEHqi676VSzTMRVSdOospUS44sKPiLzDjnuVT7OLJnaKSHkO2W)
+- [Jira](https://brafikk.atlassian.net/jira/software/projects/BRAFIKK/boards/1)
 
 ## Requirements
 * Clone repo ```[git clone https://github.com/oyjoh/DAT251-gruppe7-brafikk.git]```
