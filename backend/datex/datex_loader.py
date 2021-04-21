@@ -60,7 +60,7 @@ class DatexLoader():
             for res in results:
                 print(loc_to_sit[res][2].info['comment'])
         """
-        poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.0001)
+        poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.001)
         # print(poi_list)
         if len(poi_list[0]) > 0:
             return self.points[poi_list[0][0]]  # TODO: revisit
