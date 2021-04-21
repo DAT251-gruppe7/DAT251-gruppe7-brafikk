@@ -4,7 +4,6 @@ from datetime import datetime
 class Situation:
     def __init__(self, data=None):
         self.data = data  # XML-tree
-
     def serialize_general_data(self):
         # store result in python dict for easy json converting
         res = {"title": "",

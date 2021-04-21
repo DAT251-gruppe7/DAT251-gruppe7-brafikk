@@ -86,6 +86,14 @@ class DatexLoader():
         else:
             return lat, lng, Situation()
 
+    def check_poi(self, lat, lng):
+        poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.001)
+        # print(poi_list)
+        if len(poi_list[0]) > 0:
+            return self.points[poi_list[0][0]]  # TODO: revisit
+        else:
+            return lat, lng, None
+
     def get_attr(self, tree, attr_name, target=None):
         elem = tree.find(DatexLoader.ns + attr_name)
         if target == 'text' and elem is not None:
