@@ -36,6 +36,25 @@ class DatexLoader():
             s = Situation(elem)
             situationRecord = self.get_attr(elem, 'situationRecord')
             groupOfLocations = self.get_attr(situationRecord, 'groupOfLocations')
+            group_type = groupOfLocations.attrib['{http://www.w3.org/2001/XMLSchema-instance}type']
+
+            #res = []
+
+            locationForDisplay = self.get_attr(groupOfLocations, 'locationForDisplay')
+            latitude = self.get_attr(locationForDisplay, 'latitude', target='float')
+            longitude = self.get_attr(locationForDisplay, 'longitude', target='float')
+            self.points.append((latitude, longitude, s))
+
+            if group_type == "Linear":
+                linearExtension = self.get_attr(groupOfLocations, 'linearExtension')
+                linearLineStringExtension = self.get_attr(linearExtension, 'linearLineStringExtension')
+                gmlLineString = self.get_attr(linearLineStringExtension, 'gmlLineString')
+                #print(list(map(lambda e: float(e[:-1]), gmlLineString[0].text.split())))
+                for elem in gmlLineString[0].text.strip().split(sep=", "):
+                    tup = tuple(elem.split())
+                    self.points.append((tup[1], tup[0], s))
+
+
             locationForDisplay = self.get_attr(groupOfLocations, 'locationForDisplay')
             latitude = self.get_attr(locationForDisplay, 'latitude', target='float')
             longitude = self.get_attr(locationForDisplay, 'longitude', target='float')
@@ -43,7 +62,7 @@ class DatexLoader():
             # situation record - groupOfLocations - LocationForDisplay
             # print(latitude, longitude)
             # print(idx, s)
-
+        print(f'len points = {len(self.points)}')
         xpoints = list(map(lambda elem: [elem[0], elem[1]], self.points))
 
         self.KDtree = KDTree(xpoints)

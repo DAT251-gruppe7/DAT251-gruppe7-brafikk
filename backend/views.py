@@ -1,3 +1,5 @@
+import time
+
 from django.shortcuts import render
 
 import os
@@ -50,9 +52,15 @@ class PoiView(APIView):
     """
 
     def get(self, request, *args, **kwargs):
+        start = time.process_time()
         latitude = request.query_params.get('latitude')
         longitude = request.query_params.get('longitude')
 
         sit_json = data_handler.get_poi_by_coordinate(latitude, longitude)
-
+        print(f"{(time.process_time() - start) * 1000}ms")
         return JsonResponse(sit_json, status=status.HTTP_200_OK)
+
+
+class PathView(APIView):
+    def get(self, request, *args, **kwargs):
+        pass
