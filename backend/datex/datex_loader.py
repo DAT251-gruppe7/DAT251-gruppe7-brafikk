@@ -10,11 +10,8 @@ from backend.datex.situation import Situation
 
 
 class DatexLoader():
-    root_folder = 'backend/datex/DatexSampleData_20171023'
-    # root_folder = 'backend/datex/DatexSampleData_20210323'
-    document_name = 'GetSituation.xml'
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    path = f"{root_folder}/{document_name}"
+    use_mock = True
 
     def __init__(self):
 
@@ -27,18 +24,31 @@ class DatexLoader():
                 self.DATEX_USERNAME = config.get('DATEX', 'USERNAME')
                 self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
 
-        # print(f'path {DatexLoader.path}')
-        self.tree = ET.parse(self.path)
-        self.root = self.tree.getroot()
+        path = self.load_xml()
 
         self.points = []
+        self.KDtree = KDTree(self.parse_xml(path))
+
+    def load_xml(self):
+        if DatexLoader.use_mock:
+            root_folder = 'backend/datex/DatexSampleData_20171023'
+            document_name = 'GetSituation.xml'
+            path = f"{root_folder}/{document_name}"
+            return path
+        else:
+            # do something smart
+            return None
+
+    def parse_xml(self, path):
+        # print(f'path {DatexLoader.path}')
+        self.tree = ET.parse(path)
+        self.root = self.tree.getroot()
+
         for idx, elem in enumerate(self.root.iter(self.ns + 'situation')):
             s = Situation(elem)
             situationRecord = self.get_attr(elem, 'situationRecord')
             groupOfLocations = self.get_attr(situationRecord, 'groupOfLocations')
             group_type = groupOfLocations.attrib['{http://www.w3.org/2001/XMLSchema-instance}type']
-
-            #res = []
 
             locationForDisplay = self.get_attr(groupOfLocations, 'locationForDisplay')
             latitude = self.get_attr(locationForDisplay, 'latitude', target='float')
@@ -49,11 +59,9 @@ class DatexLoader():
                 linearExtension = self.get_attr(groupOfLocations, 'linearExtension')
                 linearLineStringExtension = self.get_attr(linearExtension, 'linearLineStringExtension')
                 gmlLineString = self.get_attr(linearLineStringExtension, 'gmlLineString')
-                #print(list(map(lambda e: float(e[:-1]), gmlLineString[0].text.split())))
                 for elem in gmlLineString[0].text.strip().split(sep=", "):
                     tup = tuple(elem.split())
                     self.points.append((tup[1], tup[0], s))
-
 
             locationForDisplay = self.get_attr(groupOfLocations, 'locationForDisplay')
             latitude = self.get_attr(locationForDisplay, 'latitude', target='float')
@@ -64,8 +72,7 @@ class DatexLoader():
             # print(idx, s)
         print(f'len points = {len(self.points)}')
         xpoints = list(map(lambda elem: [elem[0], elem[1]], self.points))
-
-        self.KDtree = KDTree(xpoints)
+        return xpoints
 
     def get_poi(self, lat, lng):
         # TODO: check xml flag and rebuild KDTree if necessary
