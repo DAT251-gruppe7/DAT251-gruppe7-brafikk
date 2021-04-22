@@ -1,17 +1,26 @@
+import sys
 import xml.etree.ElementTree as ET
 import os
 
 import configparser
 
 from datetime import datetime
+from datetime import date
 
 from scipy.spatial import KDTree
 from backend.datex.situation import Situation
+import time
+
+from requests import Session
+from requests.auth import HTTPBasicAuth
+from zipfile import ZipFile
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 class DatexLoader():
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    use_mock = True
+    use_mock = False
 
     def __init__(self):
 
@@ -24,20 +33,41 @@ class DatexLoader():
                 self.DATEX_USERNAME = config.get('DATEX', 'USERNAME')
                 self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
 
-        path = self.load_xml()
+        self.datex_header = {'If-Modified-Since': 'Tue, 22 Apr 1980 10:10:10 GMT'}
+        self.last_changed = None
+
+        path = self.load_xml(mock=False)
+        if path is None:
+            path = self.load_xml(mock=True)  # use mock data
 
         self.points = []
         self.KDtree = KDTree(self.parse_xml(path))
 
-    def load_xml(self):
-        if DatexLoader.use_mock:
+    def load_xml(self, mock):
+        if mock:
             root_folder = 'backend/datex/DatexSampleData_20171023'
             document_name = 'GetSituation.xml'
             path = f"{root_folder}/{document_name}"
             return path
         else:
-            # do something smart
-            return None
+            url = 'https://www.vegvesen.no/ws/no/vegvesen/veg/trafikkpublikasjon/trafikk/2/GetSituation'
+            root_folder = 'backend/datex/'
+            auth = HTTPBasicAuth(self.DATEX_USERNAME, self.DATEX_PASSWORD)
+            # header = {'If-Modified-Since': 'Tue, 22 Apr 2021 10:10:10 GMT'}
+            response = requests.get(url, auth=auth, headers=self.datex_header)
+            print('datex query')
+            if response.status_code == 200:
+                print('file update')
+                timestamp = datetime.utcnow()
+                self.last_changed = timestamp
+                timestamp = timestamp.strftime('%a, %d %b %Y %H:%M:%S GMT')
+                self.datex_header['If-Modified-Since'] = timestamp
+
+                with open(root_folder + 'GetSituation.xml', 'w') as f:
+                    f.write(response.content.decode("utf-8"))
+                    # print(response.content)
+                return f'{root_folder}GetSituation.xml'
+        return None
 
     def parse_xml(self, path):
         # print(f'path {DatexLoader.path}')
@@ -74,7 +104,19 @@ class DatexLoader():
         xpoints = list(map(lambda elem: [elem[0], elem[1]], self.points))
         return xpoints
 
+    def update_data(self, timestamp):
+        minutes_diff = (timestamp - self.last_changed).total_seconds() / 60.0
+        if minutes_diff > 15:
+            print(f'MINUTES SINCE LAST DATEX QUERY: {minutes_diff}')
+
+            path = self.load_xml(mock=False)
+            if path is not None:
+                self.points = []
+                self.KDtree = KDTree(self.parse_xml(path))
+
     def get_poi(self, lat, lng):
+        timestamp = datetime.utcnow()
+        self.update_data(timestamp)
         # TODO: check xml flag and rebuild KDTree if necessary
         # print(f'DATEX LOADER ID: {id(self)}')
         """
@@ -94,6 +136,8 @@ class DatexLoader():
             return lat, lng, Situation()
 
     def check_poi(self, lat, lng):
+        timestamp = datetime.utcnow()
+        self.update_data(timestamp)
         poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.001)
         # print(poi_list)
         if len(poi_list[0]) > 0:
