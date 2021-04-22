@@ -1,19 +1,13 @@
-import sys
 import xml.etree.ElementTree as ET
 import os
 
 import configparser
 
 from datetime import datetime
-from datetime import date
 
 from scipy.spatial import KDTree
 from backend.datex.situation import Situation
-import time
 
-from requests import Session
-from requests.auth import HTTPBasicAuth
-from zipfile import ZipFile
 import requests
 from requests.auth import HTTPBasicAuth
 
