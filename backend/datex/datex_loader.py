@@ -14,7 +14,7 @@ from requests.auth import HTTPBasicAuth
 
 class DatexLoader():
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    use_mock = False
+    use_mock = True
 
     def __init__(self):
 
@@ -65,7 +65,6 @@ class DatexLoader():
         return None
 
     def parse_xml(self, path):
-        # print(f'path {DatexLoader.path}')
         self.tree = ET.parse(path)
         self.root = self.tree.getroot()
 
@@ -92,9 +91,6 @@ class DatexLoader():
             latitude = self.get_attr(locationForDisplay, 'latitude', target='float')
             longitude = self.get_attr(locationForDisplay, 'longitude', target='float')
             self.points.append((latitude, longitude, s))
-            # situation record - groupOfLocations - LocationForDisplay
-            # print(latitude, longitude)
-            # print(idx, s)
         print(f'len points = {len(self.points)}')
         xpoints = list(map(lambda elem: [elem[0], elem[1]], self.points))
         return xpoints
@@ -112,19 +108,7 @@ class DatexLoader():
     def get_poi(self, lat, lng):
         timestamp = datetime.utcnow()
         self.update_data(timestamp)
-        # TODO: check xml flag and rebuild KDTree if necessary
-        # print(f'DATEX LOADER ID: {id(self)}')
-        """
-        kdtree = KDTree(xpoints)
-        start = time.process_time()
-        for results in kdtree.query_ball_point([(60.56486, 5.334039)], 0.0001):
-            print(f"{(time.process_time() - start) * 1000}ms")
-            print(results)
-            for res in results:
-                print(loc_to_sit[res][2].info['comment'])
-        """
         poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.001)
-        # print(poi_list)
         if len(poi_list[0]) > 0:
             return self.points[poi_list[0][0]]  # TODO: revisit
         else:
@@ -134,7 +118,6 @@ class DatexLoader():
         timestamp = datetime.utcnow()
         self.update_data(timestamp)
         poi_list = self.KDtree.query_ball_point([(lat, lng)], 0.001)
-        # print(poi_list)
         if len(poi_list[0]) > 0:
             return self.points[poi_list[0][0]]  # TODO: revisit
         else:
@@ -151,14 +134,3 @@ class DatexLoader():
         if target == 'int' and elem is not None:
             elem = int(elem)
         return elem
-
-
-def main():
-    sample_loader = DatexLoader()
-    lat, lng, data = sample_loader.get_poi(60.56486, 5.334039)
-    # print(data)
-    print(data.serialize_general_data())
-
-
-if __name__ == '__main__':
-    main()
