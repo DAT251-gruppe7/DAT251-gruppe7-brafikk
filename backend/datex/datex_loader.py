@@ -14,7 +14,7 @@ from requests.auth import HTTPBasicAuth
 
 class DatexLoader():
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    use_mock = True
+    use_mock = False
 
     def __init__(self):
 
