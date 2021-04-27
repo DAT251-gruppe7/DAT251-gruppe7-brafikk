@@ -45,16 +45,17 @@ class Situation:
         else:
             res['color'] = '#ed254e'
 
-        # info
+        # Event description
         generalPublicComments = situationRecord.findall(self.ns + 'generalPublicComment')
 
+        # General info
         if len(generalPublicComments) > 0:
             comment = get_attr(generalPublicComments[0], 'comment')
             info = get_attr(comment, 'values')[0].text
             res['info'] = info
 
+        # title
         if len(generalPublicComments) > 1:
-            # title
             comment = get_attr(generalPublicComments[1], 'comment')
             title = get_attr(comment, 'values')[0].text
             res['title'] = title
@@ -65,16 +66,6 @@ class Situation:
         locationExtension = get_attr(locationExtension, 'locationExtension')
         road = locationExtension[0].text
         res['road'] = road
-
-        """
-        alertCPoint = get_attr(groupOfLocations, 'alertCPoint')
-        if alertCPoint is not None:
-            alertCMethod4PrimaryPointLocation = get_attr(alertCPoint, 'alertCMethod4PrimaryPointLocation')
-            alertCLocation = get_attr(alertCMethod4PrimaryPointLocation, 'alertCLocation')
-            alertCLocationName = get_attr(alertCLocation, 'alertCLocationName')
-            title = alertCLocationName[0][0].text
-            res['title'] = title
-        """
 
         return res
 
