@@ -2,7 +2,7 @@ from django.test import TestCase
 from rest_framework import status
 
 
-class PathRequest(TestCase):
+class PathRequestTest(TestCase):
     path = '/api/path/'
 
     def test_request_path_valid_coordinates(self):
