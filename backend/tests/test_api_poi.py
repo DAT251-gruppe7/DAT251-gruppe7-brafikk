@@ -5,10 +5,6 @@ from rest_framework import status
 class SinglePoiRequestTest(TestCase):
     path = '/api/poi/'
 
-    def test_random(self):
-        self.assertEqual(3,3)
-
-    """
     def test_request_poi_valid_coordinate_1(self):
         parameters = {'latitude': 0, 'longitude': 0}
         response = self.client.get(self.path, parameters)
@@ -45,4 +41,3 @@ class SinglePoiRequestTest(TestCase):
         data = response.json()
         self.assertEqual(data['color'], '#c2eabd')
         self.assertEqual(data['title'], 'No situation on coordinate. Display title and info stored frontend')
-    """

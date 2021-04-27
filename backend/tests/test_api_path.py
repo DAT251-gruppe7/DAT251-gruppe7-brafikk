@@ -5,10 +5,6 @@ from rest_framework import status
 class PathRequestTest(TestCase):
     path = '/api/path/'
 
-    def test_random(self):
-        self.assertEqual(1, 1)
-
-    """
     def test_request_path_valid_coordinates(self):
         parameters = {'start_latitude': 60, 'start_longitude': 5, 'end_latitude': 61, 'end_longitude': 5}
         response = self.client.get(self.path, parameters)
@@ -29,4 +25,3 @@ class PathRequestTest(TestCase):
         parameters = {'something_else': 60, 'start_longitude': 5, 'end_latitude': 6, 'end_longitude': 5}
         response = self.client.get(self.path, parameters)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-"""
