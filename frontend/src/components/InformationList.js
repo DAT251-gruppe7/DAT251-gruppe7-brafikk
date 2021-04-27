@@ -5,39 +5,7 @@ import InformationCard from './InformationCard';
 import { List, ListItem } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import DialogSearchPosition from './DialogSearchPosition'
-
-/*
-const locs = {
-    "Random Sted": {
-        "lat": 61.42070084171688,
-        "lng": 5.4875439277981926,
-    },
-    "Sigerfjordtunnelen": {
-        "lat": 68.63514,
-        "lng": 15.633203,
-    },
-    "Snubba": {
-        "lat": 68.53292,
-        "lng": 17.188206,
-    },
-    "Krokdal": {
-        "lat": 59.759533,
-        "lng": 11.294941,
-    },
-    "Mell": {
-        "lat": 59.408787,
-        "lng": 10.661222,
-    },
-    "Torvastad": {
-        "lat": 59.380585,
-        "lng": 5.2414513,
-    },
-    "Fjellsrud": {
-        "lat": 59.759533,
-        "lng": 11.294941,
-    }
-}
-*/
+import Cookies from 'js-cookie';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,24 +33,7 @@ function InformationList() {
     const [locs, setLocs] = useState()
     // TODO now, when we update the state, it should re render the objects. This might be a problem if 
     // they do a new request for all of them every time we add an object to this state 
-    const [latLon, setLatLon] = React.useState({
-        "Random Sted": {
-            "lat": 61.42070084171688,
-            "lng": 5.4875439277981926,
-        },
-        "Sigerfjordtunnelen": {
-            "lat": 68.63514,
-            "lng": 15.633203,
-        },
-        "Snubba": {
-            "lat": 68.53292,
-            "lng": 17.188206,
-        },
-        "Krokdal": {
-            "lat": 59.759533,
-            "lng": 11.294941,
-        }
-    });
+    const [latLon, setLatLon] = React.useState(Cookies.get('latLon') ? JSON.parse(Cookies.get('latLon')) : {});
 
 
     const callBackDeleteFunction = (name) => {
@@ -99,6 +50,7 @@ function InformationList() {
         console.log(obj)
         const pos = obj[Object.keys(obj)[0]];
         console.log(pos)
+        Cookies.set('latLon', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
         setLatLon({ ...latLon, ...obj });
     }
 

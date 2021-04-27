@@ -26,9 +26,8 @@ function App() {
         <Route path="/routes" component={PresetRoutes} />
         <Route path="/settingspage" component={SettingsPage} />
 
-
         <LabelBottomNavigation />
-      </div >
+      </div>
     </Router>
   );
 }

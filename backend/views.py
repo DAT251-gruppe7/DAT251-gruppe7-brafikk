@@ -1,6 +1,9 @@
+import time
+
 from django.shortcuts import render
 
 import os
+import json
 import logging
 from django.http import HttpResponse
 from django.views.generic import View
@@ -50,9 +53,29 @@ class PoiView(APIView):
     """
 
     def get(self, request, *args, **kwargs):
+        start = time.process_time()
         latitude = request.query_params.get('latitude')
         longitude = request.query_params.get('longitude')
 
         sit_json = data_handler.get_poi_by_coordinate(latitude, longitude)
-
+        print(f'single poi request: {(time.process_time() - start) * 1000}ms')
         return JsonResponse(sit_json, status=status.HTTP_200_OK)
+
+
+class PathView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        start = time.process_time()
+
+        start_latitude = request.query_params.get('start_latitude')
+        start_longitude = request.query_params.get('start_longitude')
+        end_latitude = request.query_params.get('end_latitude')
+        end_longitude = request.query_params.get('end_longitude')
+
+        sit_lst_json = data_handler.get_path_by_coordinates(start_latitude, start_longitude, end_latitude,
+                                                            end_longitude)
+
+        print(f'path request: {(time.process_time() - start) * 1000}ms')
+
+        temp_res = {'status': 'meh'}
+        return JsonResponse(sit_lst_json, status=status.HTTP_200_OK)

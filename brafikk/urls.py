@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path, include, re_path
 from backend.views import PoiView
+from backend.views import PathView
 from backend.views import FrontendAppView
 from django.views.generic import TemplateView
 
@@ -25,5 +26,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/poi/', PoiView.as_view()),
+    path('api/path/', PathView.as_view()),
     re_path(r'^', FrontendAppView.as_view()),
 ]

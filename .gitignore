@@ -8,6 +8,7 @@
 
 # Config file
 config.ini
+backend/datex/GetSituation.xml
 
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
