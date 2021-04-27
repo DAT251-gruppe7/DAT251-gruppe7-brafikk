@@ -1,7 +1,5 @@
 name: django-develop
 
-environment: brafikk
-
 on:
   push:
     branches: [ develop ]
@@ -12,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: brafikk
     strategy:
       max-parallel: 4
       matrix:
