@@ -68,16 +68,17 @@ class DataHandler(metaclass=Singleton):
         self.datex_loader = DatexLoader()
         self.path_cache = {}
 
-    def get_poi_by_coordinate(self, lat, lng):
-        sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
-        return sit_obj.serialize_general_data()
-
-    def get_path_by_coordinates(self, start_latitude, start_longitude, end_latitude, end_longitude):
         self.GEOAPIFY_API_KEY = os.environ.get('GEOAPIFY_API_KEY')
         if self.GEOAPIFY_API_KEY == None:
             config = configparser.ConfigParser()
             if config.read('config.ini'):
                 self.GEOAPIFY_API_KEY = config.get('GEOAPIFY', 'API_KEY')
+
+    def get_poi_by_coordinate(self, lat, lng):
+        sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
+        return sit_obj.serialize_general_data()
+
+    def get_path_by_coordinates(self, start_latitude, start_longitude, end_latitude, end_longitude):
 
         key = (start_latitude, start_longitude, end_latitude, end_longitude)
         if key in self.path_cache:
