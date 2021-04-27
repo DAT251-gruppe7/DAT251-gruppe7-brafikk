@@ -9,6 +9,8 @@ on:
 
 jobs:
   build:
+    environment:
+      name: brafikk
 
     runs-on: ubuntu-latest
     strategy:
