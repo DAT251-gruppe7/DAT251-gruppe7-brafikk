@@ -1,7 +1,6 @@
 name: django-develop
 
-env:
-  name: brafikk
+environment: brafikk
 
 on:
   push:
