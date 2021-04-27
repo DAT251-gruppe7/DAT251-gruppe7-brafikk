@@ -1,9 +1,9 @@
+import RouteList from '../components/RouteList';
+
 function PresetRoutes() {
     return (
         <div>
-            <p>
-                This is the Routes page
-            </p>
+            <RouteList/>
         </div>
     )
 }
