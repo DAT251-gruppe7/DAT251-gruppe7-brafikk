@@ -85,8 +85,24 @@ class PathView(APIView):
 def validate_coordinate(lat, lng):
     if not lat or not lng:
         return False
-    if -90 > float(lat) > 90:
+
+    if not isfloat(lat) or not isfloat(lng):
         return False
-    if -180 > float(lng) > 180:
+
+    lat = float(lat)
+    lng = float(lng)
+
+    if lat < -90 or lat > 90:
         return False
+    if lng < -180 or lng > 180:
+        return False
+
     return True
+
+
+def isfloat(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False

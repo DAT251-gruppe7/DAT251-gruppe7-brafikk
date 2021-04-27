@@ -6,6 +6,7 @@ from backend.datex.datex_loader import DatexLoader
 from collections import defaultdict
 import random
 import requests
+from rest_framework import status
 
 
 def create_mock_sits():
@@ -92,6 +93,8 @@ class DataHandler(metaclass=Singleton):
         else:
             response = requests.get(
                 f'https://api.geoapify.com/v1/routing?waypoints={start_latitude},{start_longitude}|{end_latitude},{end_longitude}&mode=drive&apiKey={self.GEOAPIFY_API_KEY}')
+            if response.status_code == status.HTTP_400_BAD_REQUEST:
+                return {}
             json_data = response.json()
 
             coords = json_data['features'][0]['geometry']['coordinates'][0]
