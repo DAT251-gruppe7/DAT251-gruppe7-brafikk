@@ -2,7 +2,7 @@ from django.test import TestCase
 from rest_framework import status
 
 
-class SinglePoiRequest(TestCase):
+class SinglePoiRequestTest(TestCase):
     path = '/api/poi/'
 
     def test_random(self):
