@@ -2,11 +2,15 @@ from datetime import datetime
 
 
 class Situation:
+    ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
+
     def __init__(self, data=None):
         self.data = data  # XML-tree
+
     def serialize_general_data(self):
         # store result in python dict for easy json converting
-        res = {"title": "",
+        res = {"id": "",
+               "title": "",
                "startTime": "",
                "endTime": "",
                "info": "",
@@ -19,8 +23,8 @@ class Situation:
             return res
 
         # unique ID
-        title = self.data.attrib['id']
-        res['title'] = title
+        sit_id = self.data.attrib['id']
+        res['id'] = sit_id
 
         # SituationRecord
         situationRecord = get_attr(self.data, 'situationRecord')
@@ -42,10 +46,18 @@ class Situation:
             res['color'] = '#ed254e'
 
         # info
-        generalPublicComment = get_attr(situationRecord, 'generalPublicComment')
-        comment = get_attr(generalPublicComment, 'comment')
-        info = get_attr(comment, 'values')[0].text
-        res['info'] = info
+        generalPublicComments = situationRecord.findall(self.ns + 'generalPublicComment')
+
+        if len(generalPublicComments) > 0:
+            comment = get_attr(generalPublicComments[0], 'comment')
+            info = get_attr(comment, 'values')[0].text
+            res['info'] = info
+
+        if len(generalPublicComments) > 1:
+            # title
+            comment = get_attr(generalPublicComments[1], 'comment')
+            title = get_attr(comment, 'values')[0].text
+            res['title'] = title
 
         # road identification
         groupOfLocations = get_attr(situationRecord, 'groupOfLocations')
@@ -53,6 +65,16 @@ class Situation:
         locationExtension = get_attr(locationExtension, 'locationExtension')
         road = locationExtension[0].text
         res['road'] = road
+
+        """
+        alertCPoint = get_attr(groupOfLocations, 'alertCPoint')
+        if alertCPoint is not None:
+            alertCMethod4PrimaryPointLocation = get_attr(alertCPoint, 'alertCMethod4PrimaryPointLocation')
+            alertCLocation = get_attr(alertCMethod4PrimaryPointLocation, 'alertCLocation')
+            alertCLocationName = get_attr(alertCLocation, 'alertCLocationName')
+            title = alertCLocationName[0][0].text
+            res['title'] = title
+        """
 
         return res
 

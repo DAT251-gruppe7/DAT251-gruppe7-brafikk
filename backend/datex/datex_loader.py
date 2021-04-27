@@ -28,9 +28,10 @@ class DatexLoader():
                 self.DATEX_PASSWORD = config.get('DATEX', 'PASSWORD')
 
         self.datex_header = {'If-Modified-Since': 'Tue, 22 Apr 1980 10:10:10 GMT'}
-        self.last_changed = None
+        timestamp = datetime.utcnow()
+        self.last_changed = timestamp
 
-        path = self.load_xml(mock=False)
+        path = self.load_xml(self.use_mock)
         if path is None:
             path = self.load_xml(mock=True)  # use mock data
 
