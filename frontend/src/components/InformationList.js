@@ -85,6 +85,14 @@ function InformationList() {
     });
 
 
+    const callBackDeleteFunction = (name) => {
+        console.log("CallBackDeleteFunction Called. Want to delete name");
+        let currLatLon = latLon;
+        delete currLatLon[name]
+        setLatLon(currLatLon);
+    }
+
+
     const callBackFunction = (obj) => {
         console.log("Callbackfunction called");
         console.log(latLon);
@@ -92,7 +100,6 @@ function InformationList() {
         const pos = obj[Object.keys(obj)[0]];
         console.log(pos)
         setLatLon({ ...latLon, ...obj });
-
     }
 
     const handleClickOpen = () => {
@@ -111,7 +118,12 @@ function InformationList() {
                 {Object.entries(latLon).map(([key, loc], idx) => {
                     return (
                         <ListItem alignItems="center" key={idx} className={classes.grid}>
-                            <InformationCard title={key} data={loc} />
+                            <InformationCard
+                                id={idx}
+                                title={key}
+                                data={loc}
+                                parentDeleteCallBack={callBackDeleteFunction}
+                            />
                         </ListItem>
                     )
                 })}

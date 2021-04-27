@@ -8,6 +8,8 @@ import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea } from "@material-ui/core";
 import { Grid, CircularProgress } from "@material-ui/core";
 import axios from "axios";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InformationCard(props) {
     const classes = useStyles();
+    const [id, setId] = useState(props.id);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(props.title);
     const [loc, setLoc] = useState({
@@ -31,6 +34,10 @@ export default function InformationCard(props) {
         fetchInformation();
     }, []);
 
+
+    const callBackDeleteFunction = props.parentDeleteCallBack;
+
+
     const fetchInformation = async () => {
         const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
@@ -41,6 +48,13 @@ export default function InformationCard(props) {
     const handleExpandClick = (event) => {
         setExpanded(!expanded);
     };
+
+
+    const handleDeleteClick = (event) => {
+        console.log("Delete button clicked!");
+        callBackDeleteFunction(id);
+    }
+
 
     const [expanded, setExpanded] = useState(false);
     const showTime =
@@ -77,6 +91,9 @@ export default function InformationCard(props) {
                 <Typography variant="body1" align="left">
                     {data.info}
                 </Typography>
+                <IconButton aria-label="delete" onClick={handleDeleteClick}>
+                    <DeleteIcon />
+                </IconButton>
             </Collapse>
         </CardContent>;
 

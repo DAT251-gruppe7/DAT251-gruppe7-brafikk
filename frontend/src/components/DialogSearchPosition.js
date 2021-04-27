@@ -16,6 +16,10 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css'
 
 
 const useStyles = makeStyles((theme) => ({
+    dialogPaper: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    },
     fab: {
         position: 'absolute',
         bottom: theme.spacing(10),
@@ -25,12 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
-
 export default function DialogSearchPosition(props) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [locationSearch, setLocationSearch] = useState("");
+    const [scroll, setScroll] = useState('paper');
     // Do this one extra step
     //const positions = props.parentLatLon;
     //const [latLon, setLatLon] = React.useState({ positions });
@@ -64,14 +67,17 @@ export default function DialogSearchPosition(props) {
             "lng": value.properties.lon,
         };
         callBackFunction(newPosition);
+        console.log("New position: ", newPosition)
 
-        handleClose();
+        //handleClose();
     }
 
     const onSuggectionChange = (value) => {
         console.log("onSuggestionChange: ", value);
-        if (value[0] !== undefined) {
+        console.log("value length = ", value.length);
+        if (value.length > 0) {
             setLocationSearch(value[0].properties.name);
+            console.log("Current locationSearch: ", locationSearch);
         }
     };
 
@@ -94,6 +100,7 @@ export default function DialogSearchPosition(props) {
 
 
     const handleSearch = () => {
+        console.log("INSIDE HANDLESEARCH")
         console.log(locationSearch)
         const params = {
             name: locationSearch,
@@ -104,22 +111,12 @@ export default function DialogSearchPosition(props) {
             .then(res => {
                 console.log(locationSearch)
                 console.log(res.data)
-                // TODO we take the first 
-                //console.log(latLon)
-                /*
-                setLatLon({
-                    ...latLon,
-                    "hi": {
-                        "lat": res.data.features[0].properties.lat,
-                        "lng": res.data.features[0].properties.lon,
-                    }
-                }); */
                 let newPosition = {};
                 newPosition[locationSearch] = {
                     "lat": res.data.features[0].properties.lat,
                     "lng": res.data.features[0].properties.lon,
                 }
-                console.log(newPosition)
+                console.log("New position: ", newPosition)
                 callBackFunction(newPosition)
             })
             .catch(err => {
@@ -168,26 +165,36 @@ export default function DialogSearchPosition(props) {
             <Fab className={classes.fab} color="primary" aria-label="add" onClick={handleClickOpen}>
                 <AddIcon />
             </Fab>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                scroll={scroll}
+                aria-labelledby="form-dialog-title"
+            //classes={{ paper: classes.dialogPaper }}
+            >
                 <DialogTitle id="form-dialog-title">Location Search</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Search for a location, to get the Latitude and Longitude
                     </DialogContentText>
-                    <GeoapifyContext apiKey={apiKey}>
-                        <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
-                            value={value}
-                            //type={type}
-                            lang={language}
-                            countryCodes={countryCodes}
-                            filterByCountryCode={filterByCountryCode}
-                            //biasByCountryCode={biasByCountryCode}
-                            placeSelect={onPlaceSelect}
-                            suggestionsChange={onSuggectionChange}
-                        //skipIcons={true}
-                        //skipDetails={true}
-                        />
-                    </GeoapifyContext>
+                    <DialogContent style={{ height: '200px' }}>
+
+                        <GeoapifyContext apiKey={apiKey}>
+                            <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
+                                value={value}
+                                //type={type}
+                                lang={language}
+                                countryCodes={countryCodes}
+                                filterByCountryCode={filterByCountryCode}
+                                //biasByCountryCode={biasByCountryCode}
+                                placeSelect={onPlaceSelect}
+                                suggestionsChange={onSuggectionChange}
+                            //skipIcons={true}
+                            //skipDetails={true}
+                            />
+                        </GeoapifyContext>
+                    </DialogContent>
+
 
                 </DialogContent>
                 <DialogActions>
