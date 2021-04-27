@@ -85,6 +85,7 @@ class DataHandler(metaclass=Singleton):
         else:
             response = requests.get(
                 f'https://api.geoapify.com/v1/routing?waypoints={start_latitude},{start_longitude}|{end_latitude},{end_longitude}&mode=drive&apiKey={self.GEOAPIFY_API_KEY}')
+            print(f'STATUS CODE: {response.status_code}')
             if response.status_code == status.HTTP_400_BAD_REQUEST:
                 return {}
             json_data = response.json()
