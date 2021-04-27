@@ -7,74 +7,41 @@ import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea, CardHeader } from "@material-ui/core";
 import { Grid, CircularProgress } from "@material-ui/core";
-import { List, ListItem, ListItemText, ListItemIcon, Button } from "@material-ui/core";
+import { List, ListItem, Paper } from "@material-ui/core";
 import axios from "axios";
 import RouteSmallCard from './RouteSmallCard'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
-    nested: {
-        paddingLeft: theme.spacing(4),
+    bar: {
+        marginTop: theme.spacing(0.5),
+        marginLeft: theme.spacing(1.5),
+        width: theme.spacing(2),
+        height: '100%',
+    },
+    list: {
+        paddingLeft: theme.spacing(1),
     },
 }));
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 export default function RouteCard(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
-    const [title, setTitle] = useState(props.title);
-    const [loc, setLoc] = useState(props.data);
-
-    const [points, setPoints] = useState({
-        "140367118147056": {
-            "id": "NPRA_VL_294007",
-            "title": "Ev 39 Fløyfjellstunnelen, på strekningen Bergen (Nygårdstangen) - Førde, i retning mot Førde",
-            "startTime": "",
-            "endTime": "",
-            "info": "Stengt på grunn av vedlikeholdsarbeid. Utrykningskjøretøy kan passere.",
-            "road": "E39",
-            "color": "#ed254e"
-        },
-        "140367118145616": {
-            "id": "NPRA_VL_294016",
-            "title": "Ev 39 Fløyfjellstunnelen, på strekningen Bergen (Nygårdstangen) - Førde, i retning mot Førde",
-            "startTime": "",
-            "endTime": "",
-            "info": "Stengt på grunn av vedlikeholdsarbeid. Utrykningskjøretøy kan passere.",
-            "road": "E39",
-            "color": "#ed254e"
-        },
-        "140367118660752": {
-            "id": "NPRA_VL_281755",
-            "title": "Ev 39 Munkebotnentunnelen, på strekningen Sandviken - Gamle Bergen, i retning mot Gamle Bergen",
-            "startTime": "01:45:00",
-            "endTime": "05:30:00",
-            "info": "Stengt på grunn av vedlikeholdsarbeid i periodene: Mandag til fredag fra 01:45 til 05:30. Stengt for all trafikk - inkl nødetater",
-            "road": "E39",
-            "color": "#f9dc5c"
-        },
-        "140367119759728": {
-            "id": "NPRA_VL_294027",
-            "title": "Ev 39 Eidsvågstunnelen, på strekningen Førde - Bergen (Nygårdstangen), i retning mot Bergen (Nygårdstangen)",
-            "startTime": "",
-            "endTime": "",
-            "info": "Stengt på grunn av vedlikeholdsarbeid. Utrykningskjøretøy kan passere.",
-            "road": "E39",
-            "color": "#ed254e"
-        },
-        "140367118145040": {
-            "id": "NPRA_VL_294026",
-            "title": "Ev 39 Glaskartunnelen - Selviktunnelen, på strekningen Førde - Bergen (Nygårdstangen), i retning mot Bergen (Nygårdstangen)",
-            "startTime": "",
-            "endTime": "",
-            "info": "Stengt på grunn av vedlikeholdsarbeid. Utrykningskjøretøy kan passere.",
-            "road": "E39",
-            "color": "#ed254e"
-        }
-    });
+    const title = props.title;
+    const loc = props.data;
+    const [color, setColor] = useState("#c2eabd");
+    const [points, setPoints] = useState({});
 
 
     useEffect(() => {
@@ -82,50 +49,48 @@ export default function RouteCard(props) {
     }, []);
 
     const fetchInformation = async () => {
-        //const res = await axios.get(`/api/path/?start_latitude=${loc.startLat}&start_longitude=${loc.startLon}&end_latitude=${loc.endLat}&end_longitude=${loc.endLon}`)
-        //    .catch((err) => console.log(err));
-        //setData(res.data);
-        //console.log(res);
+        const res = await axios.get(`/api/path/?start_latitude=${loc.startLat}&start_longitude=${loc.startLon}&end_latitude=${loc.endLat}&end_longitude=${loc.endLon}`)
+            .catch((err) => console.log(err));
+        setPoints(res.data);
+        if(!isEmpty(res.data)){
+            setColor(Object.entries(res.data).map(([key, data], idx) => {
+                return data.color;
+            }).sort()[0]);
+        }
         setLoading(false);
     };
 
     const handleCardExpandClick = (event) => {
         setCardExpanded(!cardExpanded);
     };
-    const handleRouteExpandClick = (event) => {
-        setRouteExpanded(!routeExpanded);
-    };
 
     const [cardExpanded, setCardExpanded] = useState(false);
-    const [routeExpanded, setRouteExpanded] = useState(false);
 
     const routeInfo = loading ?
         <CardContent><Grid container justify="center">
             <CircularProgress />
         </Grid></CardContent>
         :
-        <CardContent>
-            <CardHeader
-                title={title}
-                onClick={handleCardExpandClick}
-            />
+        <Paper className={classes.root} elevation={0}>
+            <Card variant="outlined" style={{ backgroundColor: color }} >
+                <CardHeader title={title} onClick={handleCardExpandClick}/>
+            </Card>
             <Collapse in={cardExpanded} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {Object.entries(points).map(([id, loc], idx) => {
-                        return (
-                            <RouteSmallCard title={loc.title} info={loc.info}/>
-                        )
-                    })}
-                </List>
-            </Collapse>
-        </CardContent>;
+                <Grid container alignContent="flex-end" spacing={0}>
+                    <Grid item xs={1} >
+                        {!isEmpty(points) ? <Card variant="outlined" className={classes.bar} style={{ backgroundColor: color }}></Card> : <div/>}
+                    </Grid>
+                    <Grid item xs={11}>
+                        <List component="div" dense disablePadding>
+                            {
+                                Object.entries(points).map(([id, loc], idx) =>
+                                    <ListItem className={classes.list} disableGutters key={idx}><RouteSmallCard title={loc.title} info={loc.info} color={loc.color} /></ListItem>)
+                            }
+                        </List>
 
-    return (
-        <Card
-            className={classes.root}
-            variant="outlined"
-        > 
-            {routeInfo}
-        </Card>
-    );
+                    </Grid>
+                </Grid>
+            </Collapse>
+        </Paper>;
+    return routeInfo;
 }
