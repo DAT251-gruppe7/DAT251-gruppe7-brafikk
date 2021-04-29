@@ -1,14 +1,9 @@
-import time
-
-from django.shortcuts import render
-
 import os
-import json
 import logging
+
 from django.http import HttpResponse
 from django.views.generic import View
 from django.conf import settings
-
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import JsonResponse
@@ -49,33 +44,65 @@ class PoiView(APIView):
     Returns a serialized situation object on given latitude and longitude.
     Empty serialized object with color green is returned if there is no stored situation
     on given latitude and longitude
-    TODO: check that params are valid numbers, and return something smart if they are not
     """
 
     def get(self, request, *args, **kwargs):
-        start = time.process_time()
         latitude = request.query_params.get('latitude')
         longitude = request.query_params.get('longitude')
 
-        sit_json = data_handler.get_poi_by_coordinate(latitude, longitude)
-        print(f'single poi request: {(time.process_time() - start) * 1000}ms')
-        return JsonResponse(sit_json, status=status.HTTP_200_OK)
+        if validate_coordinate(latitude, longitude):
+            sit_json = data_handler.get_poi_by_coordinate(latitude, longitude)
+            return JsonResponse(sit_json, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({'error': 'invalid coordinate'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PathView(APIView):
+    """
+    @param start_latitude:
+    @param start_longitude:
+    @param end_latitude:
+    @param end_longitude:
+
+    Returns a list of serialized situation objects on given pair of latitude and longitude.
+    """
 
     def get(self, request, *args, **kwargs):
-        start = time.process_time()
 
         start_latitude = request.query_params.get('start_latitude')
         start_longitude = request.query_params.get('start_longitude')
         end_latitude = request.query_params.get('end_latitude')
         end_longitude = request.query_params.get('end_longitude')
 
-        sit_lst_json = data_handler.get_path_by_coordinates(start_latitude, start_longitude, end_latitude,
-                                                            end_longitude)
+        if validate_coordinate(start_latitude, start_longitude) and validate_coordinate(end_latitude, end_longitude):
+            sit_lst_json = data_handler.get_path_by_coordinates(start_latitude, start_longitude, end_latitude,
+                                                                end_longitude)
+            return JsonResponse(sit_lst_json, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({'error': 'invalid coordinate(s)'}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(f'path request: {(time.process_time() - start) * 1000}ms')
 
-        temp_res = {'status': 'meh'}
-        return JsonResponse(sit_lst_json, status=status.HTTP_200_OK)
+def validate_coordinate(lat, lng):
+    if not lat or not lng:
+        return False
+
+    if not isfloat(lat) or not isfloat(lng):
+        return False
+
+    lat = float(lat)
+    lng = float(lng)
+
+    if lat < -90 or lat > 90:
+        return False
+    if lng < -180 or lng > 180:
+        return False
+
+    return True
+
+
+def isfloat(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
