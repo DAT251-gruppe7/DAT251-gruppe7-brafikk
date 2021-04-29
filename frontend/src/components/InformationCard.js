@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InformationCard(props) {
     const classes = useStyles();
-    const [id, setId] = useState(props.id);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(props.title);
     const [loc, setLoc] = useState({
@@ -52,7 +51,7 @@ export default function InformationCard(props) {
 
     const handleDeleteClick = (event) => {
         console.log("Delete button clicked!");
-        callBackDeleteFunction(id);
+        callBackDeleteFunction(title);
     }
 
 
@@ -91,9 +90,6 @@ export default function InformationCard(props) {
                 <Typography variant="body1" align="left">
                     {data.info}
                 </Typography>
-                <IconButton aria-label="delete" onClick={handleDeleteClick}>
-                    <DeleteIcon />
-                </IconButton>
             </Collapse>
         </CardContent>;
 

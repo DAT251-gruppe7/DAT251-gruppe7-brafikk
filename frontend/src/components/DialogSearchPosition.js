@@ -69,12 +69,11 @@ export default function DialogSearchPosition(props) {
         callBackFunction(newPosition);
         console.log("New position: ", newPosition)
 
-        //handleClose();
+        handleClose();
     }
 
     const onSuggectionChange = (value) => {
         console.log("onSuggestionChange: ", value);
-        console.log("value length = ", value.length);
         if (value.length > 0) {
             setLocationSearch(value[0].properties.name);
             console.log("Current locationSearch: ", locationSearch);
