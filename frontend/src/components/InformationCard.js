@@ -8,6 +8,8 @@ import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea } from "@material-ui/core";
 import { Grid, CircularProgress } from "@material-ui/core";
 import axios from "axios";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +33,10 @@ export default function InformationCard(props) {
         fetchInformation();
     }, []);
 
+
+    const callBackDeleteFunction = props.parentDeleteCallBack;
+
+
     const fetchInformation = async () => {
         const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
@@ -41,6 +47,13 @@ export default function InformationCard(props) {
     const handleExpandClick = (event) => {
         setExpanded(!expanded);
     };
+
+
+    const handleDeleteClick = (event) => {
+        console.log("Delete button clicked!");
+        callBackDeleteFunction(title);
+    }
+
 
     const [expanded, setExpanded] = useState(false);
     const showTime =
