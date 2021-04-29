@@ -44,6 +44,8 @@ function InformationList() {
 
     const [isDeleting, setIsDeleting] = useState(false);
 
+    const [isEmpty, setIsEmpty] = useState(true);
+
 
     const handleCheckBoxToggle = (value) => () => {
         console.log("checked: ", checked);
@@ -80,6 +82,7 @@ function InformationList() {
         console.log(pos)
         Cookies.set('latLon', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
         setLatLon({ ...latLon, ...obj });
+        setIsEmpty(false);
     }
 
     const handleClickOpen = () => {
@@ -116,28 +119,28 @@ function InformationList() {
         }
 
         console.log("newLatLon after: ", newLatLon);
-        Cookies.set('latLon', JSON.stringify({ ...newLatLon }), { expires: 3650 });
+
+        Cookies.set('latLon', JSON.stringify({ newLatLon }), { expires: 3650 });
         setLatLon(newLatLon);
+        if (Object.keys(latLon).length === 0) {
+            setIsEmpty(true);
+        }
         setIsDeleting(false);
         console.log("LatLon in the end: ", latLon);
-    }
-
-    const handleChangeCheckBox = (idx) => {
-        //console.log("Checkbox event: ", event);
-        console.log("Index: ", idx);
-        // const newCheckedList = checkedList;
-        //newCheckedList[idx] = !checkedList[idx];
-        //newCheckedList.push(event.target.checked);
-        //console.log("event.target.checked = ", event.target.checked);
-        //set(event.target.checked);
-        //setCheckedList(newCheckedList);
     }
 
 
     return (
         <div className={classes.root}>
             <List className={classes.list}>
-                {isDeleting ? (
+
+
+                {isEmpty ? (
+                    <p>
+                        No locations added yet. Press the + button to add a location
+                    </p>
+
+                ) : isDeleting ? (
                     <ListItem
                         button
                         //onClick={executeDeletion}
