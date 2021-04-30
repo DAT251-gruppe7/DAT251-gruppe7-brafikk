@@ -14,11 +14,11 @@ from requests.auth import HTTPBasicAuth
 
 class DatexLoader():
     ns = '{' + 'http://datex2.eu/schema/2/2_0' + '}'
-    use_mock = False
 
-    def __init__(self):
-
+    def __init__(self, mock=False):
+        self.use_mock = mock
         # try to fetch secrets from environment variable, else use local config file
+
         self.DATEX_USERNAME = os.environ.get('DATEX_USERNAME')
         self.DATEX_PASSWORD = os.environ.get('DATEX_PASSWORD')
         if self.DATEX_USERNAME == None:
