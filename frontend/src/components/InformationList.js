@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import InformationCard from './InformationCard';
-import { List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
+import { List, ListItem, ListItemText, Typography, Paper } from "@material-ui/core";
 import DialogSearchPosition from './DialogSearchPosition'
 import Cookies from 'js-cookie';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +28,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function objIsEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 function InformationList() {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -40,10 +45,9 @@ function InformationList() {
 
     // TODO now, when we update the state, it should re render the objects. This might be a problem if 
     // they do a new request for all of them every time we add an object to this state 
-    const [latLon, setLatLon] = React.useState(Cookies.get('PointsOfInterest') ? JSON.parse(Cookies.get('PointsOfInterest')) : {});
-
+    const [latLon, setLatLon] = React.useState(
+        Cookies.get('PointsOfInterest')  ? JSON.parse(Cookies.get('PointsOfInterest')) : {});
     const [isDeleting, setIsDeleting] = useState(false);
-
     const [isEmpty, setIsEmpty] = useState(true);
 
 
@@ -61,8 +65,6 @@ function InformationList() {
         setChecked(newChecked);
     }
 
-
-
     const callBackDeleteFunction = (name) => {
         console.log("CallBackDeleteFunction Called. Want to delete name");
         let currLatLon = latLon;
@@ -72,7 +74,6 @@ function InformationList() {
         Cookies.set('PointsOfInterest', JSON.stringify({ currLatLon }), { expires: 3650 });
         setLatLon(currLatLon);
     }
-
 
     const callBackFunction = (obj) => {
         console.log("Callbackfunction called");
@@ -120,12 +121,15 @@ function InformationList() {
 
         console.log("newLatLon after: ", newLatLon);
 
-        Cookies.set('PointsOfInterest', JSON.stringify({ newLatLon }), { expires: 3650 });
+        Cookies.set('PointsOfInterest', JSON.stringify(newLatLon), { expires: 3650 });
         setLatLon(newLatLon);
         if (Object.keys(latLon).length === 0) {
             setIsEmpty(true);
+            Cookies.remove('PointsOfInterest');
         }
         setIsDeleting(false);
+        setCheckedList([]);
+        setChecked([]);
         console.log("LatLon in the end: ", latLon);
     }
 
@@ -135,11 +139,12 @@ function InformationList() {
             <List className={classes.list}>
 
 
-                {isEmpty ? (
-                    <p>
-                        No locations added yet. Press the + button to add a location
-                    </p>
-
+                {objIsEmpty(latLon) ? (
+                    <Paper elevation={0} >
+                        <Typography style={{margin: '1vh'}}>
+                            No locations added yet. Press the + button to add a location
+                        </Typography>
+                    </Paper>
                 ) : isDeleting ? (
                     <ListItem
                         button
@@ -149,17 +154,10 @@ function InformationList() {
                         <ListItemText primary="Confirm" />
                     </ListItem>
                 ) : (
-                    <ListItem
-                        button
-                        onClick={testHandleDeleteClick}
-                    >
+                    <ListItem button onClick={testHandleDeleteClick}>
                         <ListItemText primary="Delete" />
-                        <ListItemIcon>
-                            <DeleteIcon />
-                        </ListItemIcon>
-
                     </ListItem>)}
-                {Object.entries(latLon).map(([key, loc], idx) => {
+                {(!objIsEmpty(latLon) ? Object.entries(latLon).map(([key, loc], idx) => {
                     const labelId = `checkbox-list-secondary-label-${idx}`;
                     return (
                         <ListItem alignItems="center" key={idx} className={classes.grid}>
@@ -167,17 +165,9 @@ function InformationList() {
                                 <ListItemIcon>
                                     <Checkbox
                                         edge="end"
-                                        //checked={checked.indexOf(idx) !== -1}
-
-                                        //onChange={handleChangeCheckBox(idx)}
                                         onChange={handleCheckBoxToggle(idx)}
                                         checked={checked.indexOf(idx) !== -1}
                                         inputProps={{ 'aria-labelledby': labelId }}
-                                    // checkedList.lenth > idx + 1 ? checkedList[idx] : false
-                                    //checkedList[idx]
-
-
-                                    // inputProps={{ 'aria-labelledby': labelId }}
                                     />
                                 </ListItemIcon>)}
                             <InformationCard
@@ -187,7 +177,7 @@ function InformationList() {
                             />
                         </ListItem>
                     )
-                })}
+                } ) : <p/>)}
             </List>
 
             <DialogSearchPosition

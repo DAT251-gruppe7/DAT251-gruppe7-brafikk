@@ -8,8 +8,6 @@ import Collapse from "@material-ui/core/Collapse";
 import { CardActionArea } from "@material-ui/core";
 import { Grid, CircularProgress } from "@material-ui/core";
 import axios from "axios";
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,24 +18,21 @@ const useStyles = makeStyles((theme) => ({
 export default function InformationCard(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
-    const [title, setTitle] = useState(props.title);
-    const [loc, setLoc] = useState({
-        lat: props.data.lat,
-        lng: props.data.lng,
-    });
+    const title = props.title;
     const [data, setData] = useState({
         color: "#dee2e6"
     });
+    const loc = {
+        lat: props.data.lat,
+        lng: props.data.lng,
+    };
 
     useEffect(() => {
         fetchInformation();
     }, []);
 
-
-    const callBackDeleteFunction = props.parentDeleteCallBack;
-
-
     const fetchInformation = async () => {
+        console.log("Searching for", loc.lng, loc.lat)
         const res = await axios.get(`/api/poi/?longitude=${loc.lng}&latitude=${loc.lat}`)
             .catch((err) => console.log(err));
         setData(res.data);
@@ -47,12 +42,6 @@ export default function InformationCard(props) {
     const handleExpandClick = (event) => {
         setExpanded(!expanded);
     };
-
-
-    const handleDeleteClick = (event) => {
-        console.log("Delete button clicked!");
-        callBackDeleteFunction(title);
-    }
 
 
     const [expanded, setExpanded] = useState(false);
@@ -95,7 +84,7 @@ export default function InformationCard(props) {
 
     return (
         <Card
-            variant="outlined"
+            variant="elevation" elevation={0}
             className={classes.root}
             style={{ backgroundColor: data.color }}
         >

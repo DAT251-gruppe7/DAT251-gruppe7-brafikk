@@ -16,21 +16,6 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 90,
         marginRight: theme.spacing(0.5),
     },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: darken(theme.palette.common.white, 0.05),
-        '&:hover': {
-            backgroundColor: darken(theme.palette.common.white, 0.10),
-        },
-        marginRight: theme.spacing(0.5),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    },
     searchIcon: {
         padding: theme.spacing(0, 2),
         height: '100%',
@@ -71,19 +56,6 @@ export default function TopHeader() {
             <AppBar variant="elevation" elevation={1} position="static" color="transparent">
                 <Toolbar>
                     <img className={classes.logo} alt="brafikk" src={brafikk_logo} />
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionMobile}>
                         <IconButton

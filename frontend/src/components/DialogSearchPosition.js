@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { Button, Fab } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
 import '@geoapify/geocoder-autocomplete/styles/minimal.css'
-
-
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -33,31 +25,13 @@ export default function DialogSearchPosition(props) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [locationSearch, setLocationSearch] = useState("");
-    const [scroll, setScroll] = useState('paper');
-    // Do this one extra step
-    //const positions = props.parentLatLon;
-    //const [latLon, setLatLon] = React.useState({ positions });
+    const scroll = 'paper';
     const apiKey = process.env.REACT_APP_GEOAPIFY_API_KEY;
 
-
-    // Here comes a bunch of autocomplete stuff
-    // Source: https://github.com/geoapify/react-geocoder-autocomplete/blob/master/example/src/App.js
-    //const [type, setType] = useState();
-    const [language, setLanguage] = useState("no");
-    const [countryCodes, setCountryCodes] = useState();
-    const [value, setValue] = useState("");
-    const [filterByCountryCode, setFilterByCountryCode] = useState(['no']);
-
-    /*
-    function handleTypeChange(event) {
-        setType(event.target.value);
-    }
-    */
-
-    function handleValueChange(event) {
-        setValue(event.target.value);
-    }
-
+    const language = "no";
+    const countryCodes = undefined;
+    const value = "";
+    const filterByCountryCode = ['no'];
 
     const onPlaceSelect = (value) => {
         console.log("onPlaceSelect: ", value);
@@ -93,11 +67,6 @@ export default function DialogSearchPosition(props) {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
-        setLocationSearch(event.target.value);
-    };
-
-
     const handleSearch = () => {
         console.log("INSIDE HANDLESEARCH")
         console.log(locationSearch)
@@ -125,46 +94,13 @@ export default function DialogSearchPosition(props) {
         handleClose()
     };
 
-    /*
-    return (
-        <div>
-            <Fab className={classes.fab} color="primary" aria-label="add" onClick={handleClickOpen}>
-                <AddIcon />
-            </Fab>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Location Search</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Search for a location, to get the Latitude and Longitude
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="location"
-                        label="Enter a location"
-                        fullWidth
-                        onChange={handleChange}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-          </Button>
-                    <Button onClick={handleSearch} color="primary">
-                        Search
-          </Button>
-                </DialogActions>
-            </Dialog>
-        </div >
-    );
-    */
-
     return (
         <div>
             <Fab className={classes.fab} color="primary" aria-label="add" onClick={handleClickOpen}>
                 <AddIcon />
             </Fab>
             <Dialog
+                fullWidth={true}
                 open={open}
                 onClose={handleClose}
                 scroll={scroll}
@@ -172,30 +108,19 @@ export default function DialogSearchPosition(props) {
             //classes={{ paper: classes.dialogPaper }}
             >
                 <DialogTitle id="form-dialog-title">Location Search</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Search for a location, to get the Latitude and Longitude
-                    </DialogContentText>
-                    <DialogContent style={{ height: '200px' }}>
+                    <DialogContent style={{ height: "50vh" }}>
 
                         <GeoapifyContext apiKey={apiKey}>
                             <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
                                 value={value}
-                                //type={type}
                                 lang={language}
                                 countryCodes={countryCodes}
                                 filterByCountryCode={filterByCountryCode}
-                                //biasByCountryCode={biasByCountryCode}
                                 placeSelect={onPlaceSelect}
                                 suggestionsChange={onSuggectionChange}
-                            //skipIcons={true}
-                            //skipDetails={true}
                             />
                         </GeoapifyContext>
                     </DialogContent>
-
-
-                </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         Cancel

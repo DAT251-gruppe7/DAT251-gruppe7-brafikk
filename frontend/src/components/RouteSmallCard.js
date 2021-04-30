@@ -26,13 +26,13 @@ export default function RouteSmallCard(props) {
     };
 
     return (
-        <Card variant="outlined"
+        <Card variant="elevation" elevation={0}
             className={classes.root}
             style={{ backgroundColor: color }}
             >
             <CardActionArea onClick={handleExpandClick}>
                 <CardContent>
-                    <Typography>
+                    <Typography variant="h6">
                         {title}
                     </Typography>
                 </CardContent>

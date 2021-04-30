@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
     bar: {
         marginTop: theme.spacing(0.5),
-        marginLeft: theme.spacing(1.5),
-        width: theme.spacing(2),
-        height: '100%',
+        marginLeft: theme.spacing(3),
+        width: theme.spacing(1),
+        height: `calc(100% - ${theme.spacing(1)}px)`,
     },
     list: {
         paddingLeft: theme.spacing(1),
@@ -72,19 +72,21 @@ export default function RouteCard(props) {
         </Grid></CardContent>
         :
         <Paper className={classes.root} elevation={0}>
-            <Card variant="outlined" style={{ backgroundColor: color }} >
+            <Card variant="elevation" elevation={0} style={{ backgroundColor: color }} >
                 <CardHeader title={title} onClick={handleCardExpandClick}/>
             </Card>
             <Collapse in={cardExpanded} timeout="auto" unmountOnExit>
                 <Grid container alignContent="flex-end" spacing={0}>
                     <Grid item xs={1} >
-                        {!isEmpty(points) ? <Card variant="outlined" className={classes.bar} style={{ backgroundColor: color }}></Card> : <div/>}
+                        {!isEmpty(points) ? <Card variant="elevation" elevation={0} className={classes.bar} style={{ backgroundColor: color }}></Card> : <div/>}
                     </Grid>
                     <Grid item xs={11}>
                         <List component="div" dense disablePadding>
                             {
                                 Object.entries(points).map(([id, loc], idx) =>
-                                    <ListItem className={classes.list} disableGutters key={idx}><RouteSmallCard title={loc.title} info={loc.info} color={loc.color} /></ListItem>)
+                                    <ListItem className={classes.list} disableGutters key={idx}>
+                                        <RouteSmallCard title={loc.title} info={loc.info} color={loc.color} />
+                                    </ListItem>)
                             }
                         </List>
 
