@@ -73,7 +73,6 @@ class DataHandler(metaclass=Singleton):
             config = configparser.ConfigParser()
             if config.read('config.ini'):
                 self.GEOAPIFY_API_KEY = config.get('GEOAPIFY', 'API_KEY')
-        print(self.GEOAPIFY_API_KEY)
 
     def get_poi_by_coordinate(self, lat, lng):
         sit_lat, sit_lng, sit_obj = self.datex_loader.get_poi(lat, lng)
