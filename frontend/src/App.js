@@ -5,7 +5,6 @@ import TopHeader from './components/TopHeader'
 import LabelBottomNavigation from './components/LabelBottomNavigation'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Maps from './pages/Maps';
 import Search from './pages/Search';
 import PresetRoutes from './pages/PresetRoutes';
 import PointsOfInterest from "./pages/PointsOfInterest";
@@ -22,7 +21,6 @@ function App() {
         )} />
         <Route path="/search" component={Search} />
         <Route path="/pointsofinterest" component={PointsOfInterest} />
-        <Route path="/maps" component={Maps} />
         <Route path="/routes" component={PresetRoutes} />
         <Route path="/settingspage" component={SettingsPage} />
 

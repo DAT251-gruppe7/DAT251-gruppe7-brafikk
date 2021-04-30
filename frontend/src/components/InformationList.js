@@ -40,7 +40,7 @@ function InformationList() {
 
     // TODO now, when we update the state, it should re render the objects. This might be a problem if 
     // they do a new request for all of them every time we add an object to this state 
-    const [latLon, setLatLon] = React.useState(Cookies.get('latLon') ? JSON.parse(Cookies.get('latLon')) : {});
+    const [latLon, setLatLon] = React.useState(Cookies.get('PointsOfInterest') ? JSON.parse(Cookies.get('PointsOfInterest')) : {});
 
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -69,7 +69,7 @@ function InformationList() {
         console.log(currLatLon);
         delete currLatLon[name];
         console.log(currLatLon)
-        Cookies.set('latLon', JSON.stringify({ currLatLon }), { expires: 3650 });
+        Cookies.set('PointsOfInterest', JSON.stringify({ currLatLon }), { expires: 3650 });
         setLatLon(currLatLon);
     }
 
@@ -80,7 +80,7 @@ function InformationList() {
         console.log(obj)
         const pos = obj[Object.keys(obj)[0]];
         console.log(pos)
-        Cookies.set('latLon', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
+        Cookies.set('PointsOfInterest', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
         setLatLon({ ...latLon, ...obj });
         setIsEmpty(false);
     }
@@ -120,7 +120,7 @@ function InformationList() {
 
         console.log("newLatLon after: ", newLatLon);
 
-        Cookies.set('latLon', JSON.stringify({ newLatLon }), { expires: 3650 });
+        Cookies.set('PointsOfInterest', JSON.stringify({ newLatLon }), { expires: 3650 });
         setLatLon(newLatLon);
         if (Object.keys(latLon).length === 0) {
             setIsEmpty(true);

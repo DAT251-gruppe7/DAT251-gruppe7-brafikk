@@ -35,7 +35,6 @@ export default function LabelBottomNavigation() {
             <BottomNavigationAction label="Hjem" value="home" icon={<HomeIcon />} component={Link} to="/" />
             <BottomNavigationAction label="Steder" value="points" icon={<LocationOnIcon />} component={Link} to="/pointsofinterest" />
             <BottomNavigationAction label="Ruter" value="routes" icon={<TimelineIcon />} component={Link} to="/routes" />
-            <BottomNavigationAction label="Kart" value="map" icon={<MapIcon />} component={Link} to="/maps" />
         </BottomNavigation>
     );
 }
