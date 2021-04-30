@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
-import '@geoapify/geocoder-autocomplete/styles/minimal.css'
+import '@geoapify/geocoder-autocomplete/styles/round-borders.css'
+import './myStyle.css';
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -108,26 +109,22 @@ export default function DialogSearchPosition(props) {
             //classes={{ paper: classes.dialogPaper }}
             >
                 <DialogTitle id="form-dialog-title">Location Search</DialogTitle>
-                    <DialogContent style={{ height: "50vh" }}>
+                <DialogContent style={{ height: "50vh" }}>
 
-                        <GeoapifyContext apiKey={apiKey}>
-                            <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
-                                value={value}
-                                lang={language}
-                                countryCodes={countryCodes}
-                                filterByCountryCode={filterByCountryCode}
-                                placeSelect={onPlaceSelect}
-                                suggestionsChange={onSuggectionChange}
-                            />
-                        </GeoapifyContext>
-                    </DialogContent>
+                    <GeoapifyContext apiKey={apiKey}>
+                        <GeoapifyGeocoderAutocomplete style={{ fontSize: '16px' }} placeholder="Enter address here"
+                            value={value}
+                            lang={language}
+                            countryCodes={countryCodes}
+                            filterByCountryCode={filterByCountryCode}
+                            placeSelect={onPlaceSelect}
+                            suggestionsChange={onSuggectionChange}
+                        />
+                    </GeoapifyContext>
+                </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-          </Button>
-                    <Button onClick={handleSearch} color="primary">
-                        Search
-          </Button>
+                    <Button onClick={handleClose} color="primary">Cancel</Button>
+                    <Button onClick={handleSearch} color="primary">Search</Button>
                 </DialogActions>
             </Dialog>
         </div >

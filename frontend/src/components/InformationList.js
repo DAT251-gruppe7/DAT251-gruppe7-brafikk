@@ -38,17 +38,10 @@ function objIsEmpty(obj) {
 
 function InformationList() {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const [locs, setLocs] = useState();
     const [checked, setChecked] = React.useState([]);
-    const [checkedList, setCheckedList] = useState([])
-
-    // TODO now, when we update the state, it should re render the objects. This might be a problem if 
-    // they do a new request for all of them every time we add an object to this state 
     const [latLon, setLatLon] = React.useState(
         Cookies.get('PointsOfInterest')  ? JSON.parse(Cookies.get('PointsOfInterest')) : {});
     const [isDeleting, setIsDeleting] = useState(false);
-    const [isEmpty, setIsEmpty] = useState(true);
 
 
     const handleCheckBoxToggle = (value) => () => {
@@ -83,31 +76,13 @@ function InformationList() {
         console.log(pos)
         Cookies.set('PointsOfInterest', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
         setLatLon({ ...latLon, ...obj });
-        setIsEmpty(false);
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (value) => {
-        setOpen(false);
-    }
-
-    const testHandleDeleteClick = () => {
-        console.log("TEST");
-
-        // When the user wants to delete, first fill the checkedList array with False
-        for (var i = 0; i < latLon.length; i++) {
-            setCheckedList(checkedList.push(false));
-        }
-        console.log("CheckedList: ", checkedList);
+    const handleDeleteClick = () => {
         setIsDeleting(true);
     }
 
     const anotherExecuteDeletion = () => {
-        console.log("Inside anotherTestHandleDeleteClick");
-
         console.log("Checked: ", checked);
 
         const newLatLon = latLon;
@@ -116,7 +91,6 @@ function InformationList() {
         for (var i = 0; i < checked.length; i++) {
             console.log("Deleting ", keys[checked[i]]);
             delete newLatLon[keys[checked[i]]];
-            //newLatLon.splice(keys[i])
         }
 
         console.log("newLatLon after: ", newLatLon);
@@ -124,15 +98,12 @@ function InformationList() {
         Cookies.set('PointsOfInterest', JSON.stringify(newLatLon), { expires: 3650 });
         setLatLon(newLatLon);
         if (Object.keys(latLon).length === 0) {
-            setIsEmpty(true);
             Cookies.remove('PointsOfInterest');
         }
         setIsDeleting(false);
-        setCheckedList([]);
         setChecked([]);
         console.log("LatLon in the end: ", latLon);
     }
-
 
     return (
         <div className={classes.root}>
@@ -142,25 +113,21 @@ function InformationList() {
                 {objIsEmpty(latLon) ? (
                     <Paper elevation={0} >
                         <Typography style={{margin: '1vh'}}>
-                            No locations added yet. Press the + button to add a location
+                            Click the + button to add a location
                         </Typography>
                     </Paper>
                 ) : isDeleting ? (
-                    <ListItem
-                        button
-                        //onClick={executeDeletion}
-                        onClick={anotherExecuteDeletion}
-                    >
+                    <ListItem button onClick={anotherExecuteDeletion}>
                         <ListItemText primary="Confirm" />
                     </ListItem>
                 ) : (
-                    <ListItem button onClick={testHandleDeleteClick}>
+                    <ListItem button onClick={handleDeleteClick}>
                         <ListItemText primary="Delete" />
                     </ListItem>)}
                 {(!objIsEmpty(latLon) ? Object.entries(latLon).map(([key, loc], idx) => {
                     const labelId = `checkbox-list-secondary-label-${idx}`;
                     return (
-                        <ListItem alignItems="center" key={idx} className={classes.grid}>
+                        <ListItem alignItems="center" key={key} className={classes.grid}>
                             {isDeleting && (
                                 <ListItemIcon>
                                     <Checkbox
@@ -179,12 +146,7 @@ function InformationList() {
                     )
                 } ) : <p/>)}
             </List>
-
-            <DialogSearchPosition
-                parentCallBack={callBackFunction}
-            //parentLatLon={latLon}
-            />
-
+            <DialogSearchPosition parentCallBack={callBackFunction} />
         </div>
     )
 }

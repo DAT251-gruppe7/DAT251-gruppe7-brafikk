@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     bar: {
         marginTop: theme.spacing(0.5),
-        marginLeft: theme.spacing(3),
-        width: theme.spacing(1),
+        marginLeft: '70%',
+        width: '30%',
         height: `calc(100% - ${theme.spacing(1)}px)`,
     },
     list: {
