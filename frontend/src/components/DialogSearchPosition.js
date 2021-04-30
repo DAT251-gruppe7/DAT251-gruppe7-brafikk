@@ -62,7 +62,7 @@ export default function DialogSearchPosition(props) {
     const onPlaceSelect = (value) => {
         console.log("onPlaceSelect: ", value);
         let newPosition = {};
-        newPosition[value.properties.name] = {
+        newPosition[value.properties.address_line1] = {
             "lat": value.properties.lat,
             "lng": value.properties.lon,
         };
