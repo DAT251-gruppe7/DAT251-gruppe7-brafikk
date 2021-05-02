@@ -3,7 +3,7 @@ import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import InformationCard from './InformationCard';
 import { List, ListItem } from "@material-ui/core";
-import DialogSearchPosition from './DialogSearchPosition'
+import DialogSearchPositionPaths from './DialogSearchPositionPaths'
 import Cookies from 'js-cookie';
 import RouteCard from './RouteCard.js'
 
@@ -47,7 +47,23 @@ function InformationList() {
         }]
     );
 
+    const callBackFunction = (obj) => {
+        console.log("Callbackfunction called");
+        const newRouteList = routes.concat(obj);
+        setRoutes(newRouteList);
+        Cookies.set('Routes', JSON.stringify(newRouteList), { expires: 3650 });
+        /*
+        console.log(latLon);
+        console.log(obj)
+        const pos = obj[Object.keys(obj)[0]];
+        console.log(pos)
+        Cookies.set('Routes', JSON.stringify({ ...latLon, ...obj }), { expires: 3650 });
+        setLatLon({ ...latLon, ...obj });
+        */
+    }
+
     return (
+        <div>
         <List component="div" dense className={classes.root}>
             {
                 routes.map((elem, idx) =>
@@ -56,6 +72,8 @@ function InformationList() {
                     </ListItem>)
             }
         </List>
+        <DialogSearchPositionPaths parentCallBack={callBackFunction} />
+        </div>
     )
 }
 
