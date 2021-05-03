@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '80vh',
     },
     fab: {
-        position: 'absolute',
+        position: 'fixed',
         bottom: theme.spacing(10),
         right: theme.spacing(4),
     },
